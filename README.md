@@ -21,6 +21,35 @@ User Stories:
     *A user wants to see their streak for completing activities, the app will be able to serve them data about different types of streaks, whether its daily streaks, weekly streaks, or same type activity streaks. 
         This is planned to be a prominent feature on the homepage.
 
+Feature Stories:
+
+    *Login/signup:
+        User comes to the site and either logs in to their existing account, or creates a new account
+        The user will have some sort of authentication that will stick with them, no need to log in multiple times
+        Will likely be the landing page to the site
+        Activities will be filtered by user, one user will not be able to see another's data
+
+    *Session submit:
+        User comes to the site with the time/distance from their last session, fills out that info to a form
+        On form submit, that data is POSTed to the backend, and tied to the user that submitted it
+        The user is then redirected to either a summary of that session, or that week (will be decided on later)
+
+    *Activity Summary:
+        User is likely taken here as their homepage
+        Plan is to implement as a calendar, with each day showing a summary of what the user did on that day
+        User can choose between a weekly calendar and a monthly calendar
+        User can click on a session to go to a detail page show that session's activities/statistics
+
+    *Category Filtering
+        User will have a menu to filter their activities by what category they fall under
+        User will have different viewing options in a menu for how they want to organize the data
+        User can click on a session to again go to its detail page and see advanced stats
+
+    *Streaks
+        User can choose the type of streaks that they want to see displayed (potentially choosing a default sort on signup)
+        Streaks will display on their homepage
+        Potentially have a streaks page with more advanced stats about their currently selected type of streak
+
 The above user stories I think is a good place to start in terms of goals for this project. Because this is supposed to be a clean and polished app, I feel as though it is better to lock down a core set of features, and improve on them after reaching MVP.
 I think I can reach MVP status for this project within about a week and a half, and afterwards, can start working on some stretch goals:
 

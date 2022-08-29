@@ -1,70 +1,33 @@
-# Getting Started with Create React App
+Flatiron Phase 5/Capstone Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+by Charles Jarvis
 
-## Available Scripts
+This app is intended to be a sort of fitness tracking application, with a specific focus on cardio-centric exercises.
+This idea was born out of a personal need for something like this, as right now I really just use a whiteboard calendar on my wall, and adding some more measurements/categories I think would be very useful.
+The main idea behind this app is for a user to be able to come with some statistics about their workout, and have the app provide them with some statistics, and keep track of their progress over the last week/month/year.
+One note about this project is that it is more of an "after the fact" type of project, and thus will not be dealing with GPS data or other active monitoring tech.
 
-In the project directory, you can run:
+User Stories:
 
-### `npm start`
+    *A user comes to the site having just completed a run/bike/swim/etc and has tracked both the distance and time of their exercise. They can submit a new workout to the app, which will store the data and display it for the user.
+        The app will also provide the user some more detailed statistics about their session. At this point in time I am thinking calories, distance/time, personal records.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    *User wants to see their past week/month of activity, the app will have some way of displaying the stored data about the users activity history in an organized and sleek manner.
+        At this moment in time I see this as a calendar, but depending on how implementing that goes it might be in a different format. Will also likely be the homepage
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    *A user wants to see their activities broken down by category. The app will be able to serve the user the data about their exercise sessions, based on what activity they are doing, along with some relevant data about those sessions.
+        Currently I plan to include running, biking, hiking, swimming, and skiing, simply based on myself. **Possible stretch goal - add more activity types
 
-### `npm test`
+    *A user wants to see their streak for completing activities, the app will be able to serve them data about different types of streaks, whether its daily streaks, weekly streaks, or same type activity streaks. 
+        This is planned to be a prominent feature on the homepage.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The above user stories I think is a good place to start in terms of goals for this project. Because this is supposed to be a clean and polished app, I feel as though it is better to lock down a core set of features, and improve on them after reaching MVP.
+I think I can reach MVP status for this project within about a week and a half, and afterwards, can start working on some stretch goals:
 
-### `npm run build`
+Stretch Goals:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    *A section that allows the user to also keep track of their meals/calorie intake. I think this fits right in with the theme of my project.
+        If this ends up getting included, I could revamp the session/daily statistics to include a calorie intake/expendature model to help the user keep track of that
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    *Incude a section about trails, allowing users to submit their favorite trails and allowing others inspiration for where to go next.
+        Could have a browsing page, reviews, top rated, etc. 

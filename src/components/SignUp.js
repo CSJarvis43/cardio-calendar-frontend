@@ -33,7 +33,7 @@ function SignUp({ setUser, ENDPOINT }) {
         .then((r) => r.json())
         .then((r) => {
             if ((r).status ==="created") {
-                fetch("http://localhost:3000/login", {
+                fetch(`${ENDPOINT}/login`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

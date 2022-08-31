@@ -78,7 +78,7 @@ export default function NavBar({handleLogout}) {
                 ) : (
                     <Box display={'flex'}>
                         <Typography alignSelf={'center'}>
-                            HELLO, {user.username.toUpperCase()}
+                            HELLO, {user.username}
                         </Typography>
                         <Button 
                             color="inherit"

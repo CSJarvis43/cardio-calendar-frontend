@@ -3,11 +3,11 @@ import useAuthorizedFetch from '../lib/useAuthorizedFetch'
 
 function Home({ ENDPOINT }) {
 
-  const fetchMe = useAuthorizedFetch(`${ENDPOINT}/me`)
+  // const fetchMe = useAuthorizedFetch(`${ENDPOINT}/me`)
 
-  useEffect(() => {
-    fetchMe().then(d => console.log(`authorized fetch: ${d.user.username}`))
-  }, [])
+  // useEffect(() => {
+  //   fetchMe().then(d => console.log(`authorized fetch: ${d.user.username}`))
+  // }, [])
 
 
 

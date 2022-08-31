@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { errorMessageState, loggedInState, passwordState, usernameState } from '../recoil/atoms';
 
-function SignUp({ setUser }) {
+function SignUp({ setUser, ENDPOINT }) {
     const [username, setUsername] = useRecoilState(usernameState)
     const [password, setPassword] = useRecoilState(passwordState)
     const setLoggedIn = useSetRecoilState(loggedInState)
@@ -17,15 +17,13 @@ function SignUp({ setUser }) {
 
         const userObj = {
             user: {
-                username: username,
-                password: password
+                username,
+                password
             }
         }
 
-        // console.log(userObj)
 
-
-        fetch("http://localhost:3000/users", {
+        fetch(`${ENDPOINT}/users`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -35,26 +33,41 @@ function SignUp({ setUser }) {
         .then((r) => r.json())
         .then((r) => {
             if ((r).status ==="created") {
-                setLoggedIn(true)
-                setUser(r.user)
+                fetch("http://localhost:3000/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(userObj),
+                })
+                .then((r) => r.json())
+                .then((r) => {
+                    localStorage.setItem('token', r.jwt)
+                    setUser(r.user)
+                    setUsername('')
+                    setPassword('')
+                })
                 setErrorMessage("")
-                setUsername('')
-                setPassword('')
                 navigate('/')
             }
         })
         .catch((r) => 
             setErrorMessage("Signup failed")
         )
-        // .then(navigate('/'))
     }
 
     return (
-        <Container maxWidth="false">
-            <Grid container>
-                <Grid item xs={12} align="center" justify="center">
-                    <FormControl sx={{ m: 2 }}>
-                        <Typography justifySelf={'center'}>
+        <Grid >
+            <Grid container
+            style={{
+                minWidth: "100%",
+                height: "100vh",
+            }}
+            justify="center"
+            >
+                <Grid item xs={12} align="center">
+                    <FormControl sx={{ m: 2 }} >
+                        <Typography variant='h4' justifySelf={'center'}>
                             Sign Up!
                         </Typography>
                         <TextField
@@ -82,23 +95,17 @@ function SignUp({ setUser }) {
                         >
                             Sign Up
                         </Button>
-                    </FormControl>
-                </Grid>
-            </Grid>
-            <Grid container>
-                <Grid item xs={12} align="center" justify="center">
-                    <Button
+                        <Button
                         variant='contained'
                         component={Link}
                         to="/login"
-                        align="center"
-                        justify="center"
-                    >
+                        >
                         Log In Instead
                     </Button>
+                    </FormControl>
                 </Grid>
             </Grid>
-        </Container>
+        </Grid>
     );
 }
 

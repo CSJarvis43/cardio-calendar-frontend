@@ -11,7 +11,8 @@ import { useEffect } from "react";
 function App() {
 
   const [user, setUser] = useRecoilState(currentUser)
-  // const setUser = useSetRecoilState(currentUser)
+
+  const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://cardio-calendar.herokuapp.com' : 'http://localhost:3000'
 
   useEffect(() => {
     let token = localStorage.token
@@ -24,17 +25,8 @@ function App() {
   }, []);
   
 
-  // function checkForToken() {
-  //   let token = localStorage.token
-  //   if (typeof token !== 'undefined' && token.length > 1) {
-  //     tokenLogin(token)
-  //   } else {
-  //     console.log("No token found, try logging in")
-  //   }
-  // }
-
   function tokenLogin(token) {
-    fetch("http://localhost:3000/auto_login", {
+    fetch(`${ENDPOINT}/auto_login`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -48,7 +40,7 @@ function App() {
 
   function handleLogout() {
     setUser(null)
-    localStorage.token = ""
+    localStorage.removeItem('token')
   }
 
   console.log(user)
@@ -65,23 +57,25 @@ function App() {
           <Route
             path="/"
             element={
-                <Home />
+                <Home ENDPOINT={ENDPOINT}/>
             }
           />
           <Route
             path="/login"
             element={
-              <Container maxWidth={"false"}>
-                <Login setUser={setUser}/>
-              </Container>
+                <Login 
+                  setUser={setUser}
+                  ENDPOINT={ENDPOINT}
+                />
             }
           />
           <Route
             path="/signup"
             element={
-              <Container maxWidth={"false"}>
-                <SignUp setUser={setUser}/>
-              </Container>
+                <SignUp 
+                  setUser={setUser}
+                  ENDPOINT={ENDPOINT}
+                />
             }
           />
         </Routes>

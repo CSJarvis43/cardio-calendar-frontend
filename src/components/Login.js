@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil';
 import { passwordState, usernameState } from '../recoil/atoms';
 
-function Login({setUser}) {
+function Login({setUser, ENDPOINT}) {
 
     const [username, setUsername] = useRecoilState(usernameState)
     const [password, setPassword] = useRecoilState(passwordState)
@@ -15,12 +15,12 @@ function Login({setUser}) {
 
         const userObj = {
             user: {
-                username: username,
-                password: password
+                username,
+                password
             }
         }
 
-        fetch("http://localhost:3000/login", {
+        fetch(`${ENDPOINT}/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -29,7 +29,7 @@ function Login({setUser}) {
         })
         .then((r) => r.json())
         .then((r) => {
-            localStorage.token = r.jwt
+            localStorage.setItem('token', r.jwt)
             setUser(r.user)
             setUsername('')
             setPassword('')
@@ -43,7 +43,7 @@ function Login({setUser}) {
         <Grid container>
             <Grid item xs={12} align="center" justify="center">
                 <FormControl sx={{ m: 2 }}>
-                    <Typography justifySelf={'center'}>
+                    <Typography variant='h4' justifySelf={'center'}>
                         Login
                     </Typography>
                     <TextField

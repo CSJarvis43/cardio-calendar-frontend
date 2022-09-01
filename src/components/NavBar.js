@@ -64,10 +64,11 @@ export default function NavBar({handleLogout}) {
                         Home
                     </MenuItem>
                 </Menu>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
                     Cardio Calendar
                 </Typography>
                 {!user ? (
+                    <Box>
                     <Button 
                         color="inherit"
                         component={Link}
@@ -75,11 +76,20 @@ export default function NavBar({handleLogout}) {
                     >
                         Login
                     </Button>
+                    <Button 
+                        color="inherit"
+                        component={Link}
+                        to='/signup'
+                    >
+                        Sign Up
+                </Button>
+                </Box>
                 ) : (
                     <Box display={'flex'}>
-                        <Typography alignSelf={'center'}>
-                            HELLO, {user.username}
+                        <Typography alignSelf={'center'} variant="body" padding={3}>
+                            Hello, {user.username}
                         </Typography>
+                        <br />
                         <Button 
                             color="inherit"
                             onClick={handleLogout}

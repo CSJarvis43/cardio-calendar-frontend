@@ -16,7 +16,6 @@ function App() {
 
   useEffect(() => {
     let token = localStorage.token
-    console.log(token)
     if (typeof token !== 'undefined' && token.length > 1) {
       tokenLogin(token)
     } else {
@@ -43,7 +42,7 @@ function App() {
     localStorage.removeItem('token')
   }
 
-  console.log(user)
+  // console.log(user)
 
 
 

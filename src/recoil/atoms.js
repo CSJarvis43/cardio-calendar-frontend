@@ -29,3 +29,13 @@ export const errorMessageState = atom({
     key: "errorMessageState",
     default: "",
 })
+
+export const activityEventsState = atom({
+    key: "activityEventsState",
+    default: [],
+})
+
+export const selectedCalendarEventState = atom({
+    key: "selectedCalendarEventState",
+    default: null,
+})

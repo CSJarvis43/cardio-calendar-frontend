@@ -50,7 +50,7 @@ function App() {
 
   return (
 
-    <Router>
+    <Router basename={"/cardio-calendar-frontend"}>
       <Box className="App">
         <NavBar handleLogout={handleLogout}/>
         <Routes>

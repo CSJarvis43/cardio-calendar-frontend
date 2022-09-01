@@ -46,6 +46,7 @@ function SignUp({ setUser, ENDPOINT }) {
                     setUser(r.user)
                     setUsername('')
                     setPassword('')
+                    setLoggedIn(true)
                 })
                 setErrorMessage("")
                 navigate('/')

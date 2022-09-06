@@ -7,6 +7,7 @@ import { activityEventsState, currentUser, selectedCalendarEventState } from '..
 import './Home.css'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -16,17 +17,31 @@ function Home({ ENDPOINT }) {
   const [selectedCalendarEvent, setSelectedCalendarEvent] = useRecoilState(selectedCalendarEventState)
   const user = useRecoilValue(currentUser)
   
+  const navigate = useNavigate()
   const eventAuthFetch = useAuthorizedFetch(`${ENDPOINT}/active_days`)
+
 
   useEffect(() => {
     eventAuthFetch().then(json => json.filter(e => e.user_id === user.id)).then(setActivityEvents)
-  }, [])
+  }, [user])
+
+  // console.log(user)
+
+  // useEffect(() => {
+  //   eventAuthFetch()
+  //   .then(json => {
+  //     if(user) {
+  //       json.filter(e => e.user_id === user.id)
+  //     }
+  //   })
+  //   .then(setActivityEvents)
+  // }, [user])
 
   // const eventsByUser = activityEvents.filter(e => e.user_id === user.id)
 
-  console.log(activityEvents)
+  // console.log(activityEvents)
 
-  const eventsByUser = activityEvents
+  // const eventsByUser = activityEvents
 
   const transformedEvents = activityEvents.map(e => 
     ({
@@ -41,20 +56,22 @@ function Home({ ENDPOINT }) {
     console.log(e)
   }
 
-  console.log(selectedCalendarEvent)
+  // console.log(selectedCalendarEvent)
 
 
   return (
     
-    <Grid style={{ height: "94vh" }}>
+    <Grid>
       <FullCalendar 
         plugins={[dayGridPlugin]}
         events={transformedEvents}
         editable={true}
         selectable={true}
-        aspectRatio={2.19}
+        aspectRatio={2.2}
         eventClick={function(arg){
           setSelectedCalendarEvent(arg.event.id)
+          navigate('/event')
+          // console.log(selectedCalendarEvent)
         }}
       />
     </Grid>

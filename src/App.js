@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import { useEffect } from "react";
+import Event from "./components/Event";
 
 function App() {
 
@@ -44,6 +45,9 @@ function App() {
 
   // console.log(user)
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1)
+  }
 
 
 
@@ -74,6 +78,15 @@ function App() {
                 <SignUp 
                   setUser={setUser}
                   ENDPOINT={ENDPOINT}
+                />
+            }
+          />
+                    <Route
+            path="/event"
+            element={
+                <Event
+                ENDPOINT={ENDPOINT}
+                capitalizeFirstLetter={capitalizeFirstLetter}
                 />
             }
           />

@@ -37,5 +37,22 @@ export const activityEventsState = atom({
 
 export const selectedCalendarEventState = atom({
     key: "selectedCalendarEventState",
-    default: null,
+    default: [1],
+})
+
+export const activitiesByDayState = atom({
+    key: "activitiesByDayState",
+    default: [],
+})
+
+export const selectedDateState = atom({
+    key: "selectedDateState",
+    default: {
+        active_day: {
+            date: "2022-08-31",
+            day_of_week: "wednesday",
+            streak: 4,
+            user_id: 1
+        }
+    },
 })

@@ -89,10 +89,11 @@ export default function NavBar({handleLogout}) {
                         <Typography alignSelf={'center'} variant="body" padding={3}>
                             Hello, {user.username}
                         </Typography>
-                        <br />
                         <Button 
                             color="inherit"
                             onClick={handleLogout}
+                            component={Link}
+                            to='/login'
                         >
                             Logout
                         </Button>

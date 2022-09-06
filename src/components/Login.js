@@ -40,7 +40,14 @@ function Login({setUser, ENDPOINT}) {
 
   return (
     <Container maxWidth="false">
-        <Grid container>
+        <Grid 
+            container
+            direction='column'
+            alignItems={'center'}
+            justifyContent={'center'}
+            style={{ minHeight: '80vh'}}
+        
+        >
             <Grid item xs={12} align="center" justify="center">
                 <FormControl sx={{ m: 2 }}>
                     <Typography variant='h4' justifySelf={'center'}>
@@ -71,12 +78,7 @@ function Login({setUser, ENDPOINT}) {
                     >
                         Login
                     </Button>
-                </FormControl>
-            </Grid>
-        </Grid>
-        <Grid container>
-            <Grid item xs={12} align="center" justify="center">
-                <Button
+                    <Button
                     variant='contained'
                     component={Link}
                     to="/signup"
@@ -85,6 +87,7 @@ function Login({setUser, ENDPOINT}) {
                 >
                     Sign Up Instead
                 </Button>
+                </FormControl>
             </Grid>
         </Grid>
     </Container>

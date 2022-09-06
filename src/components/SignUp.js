@@ -59,13 +59,14 @@ function SignUp({ setUser, ENDPOINT }) {
 
     return (
         <Grid >
-            <Grid container
-            style={{
-                minWidth: "100%",
-                height: "100vh",
-            }}
-            justify="center"
-            >
+            <Grid 
+            container
+            direction='column'
+            alignItems={'center'}
+            justifyContent={'center'}
+            style={{ minHeight: '80vh'}}
+        
+        >
                 <Grid item xs={12} align="center">
                     <FormControl sx={{ m: 2 }} >
                         <Typography variant='h4' justifySelf={'center'}>

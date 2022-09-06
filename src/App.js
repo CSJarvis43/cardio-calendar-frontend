@@ -7,7 +7,7 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import { useEffect } from "react";
-import Event from "./components/Event";
+import Events from "./components/Events";
 
 function App() {
 
@@ -84,7 +84,7 @@ function App() {
                     <Route
             path="/event"
             element={
-                <Event
+                <Events
                 ENDPOINT={ENDPOINT}
                 capitalizeFirstLetter={capitalizeFirstLetter}
                 />

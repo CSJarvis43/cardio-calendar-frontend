@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { atom } from "recoil";
 
 export const loggedInState = atom({
@@ -50,9 +51,34 @@ export const selectedDateState = atom({
     default: {
         active_day: {
             date: "2022-08-31",
-            day_of_week: "wednesday",
-            streak: 4,
-            user_id: 1
+            day_of_week: "wednesday"
         }
+    }
+})
+
+export const deletingActivityState = atom({
+    key: "deletingActivityState",
+    default: 1
+})
+
+export const newEventDataState = atom({
+    key: 'newEventDataState',
+    default: {
+        exercise_type: "",
+        calories: 0,
+        activity_length: 0,
+        distance: 0,
+        rating: 0,
+        active_day_id: null
     },
+})
+
+export const addEventDateState = atom({
+    key: "addEventDateState",
+    default: dayjs()
+})
+
+export const activeDaysForNewEventState = atom({
+    key: "activeDaysForNewEventState",
+    default: []
 })

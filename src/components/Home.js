@@ -25,23 +25,6 @@ function Home({ ENDPOINT }) {
     eventAuthFetch().then(json => json.filter(e => e.user_id === user.id)).then(setActivityEvents)
   }, [user])
 
-  // console.log(user)
-
-  // useEffect(() => {
-  //   eventAuthFetch()
-  //   .then(json => {
-  //     if(user) {
-  //       json.filter(e => e.user_id === user.id)
-  //     }
-  //   })
-  //   .then(setActivityEvents)
-  // }, [user])
-
-  // const eventsByUser = activityEvents.filter(e => e.user_id === user.id)
-
-  // console.log(activityEvents)
-
-  // const eventsByUser = activityEvents
 
   const transformedEvents = activityEvents.map(e => 
     ({
@@ -52,11 +35,8 @@ function Home({ ENDPOINT }) {
     })
   )
 
-  function handleEventClick(e) {
-    console.log(e)
-  }
-
   // console.log(selectedCalendarEvent)
+  
 
 
   return (
@@ -68,6 +48,19 @@ function Home({ ENDPOINT }) {
         editable={true}
         selectable={true}
         aspectRatio={2.2}
+        defaultAllDay={true}
+        customButtons={{
+          addEventButton: {
+            text: 'Add an Activity',
+            click: function() {
+              navigate('/new_event')
+            }
+          }
+        }}
+        headerToolbar={{
+          start: 'title',
+          center: 'addEventButton'
+        }}
         eventClick={function(arg){
           setSelectedCalendarEvent(arg.event.id)
           navigate('/event')

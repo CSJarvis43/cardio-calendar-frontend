@@ -1,6 +1,7 @@
+import FullCalendar from '@fullcalendar/react'
 import { Box, Button, Card, CardActions, CardContent, Grid, Paper, Rating, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import useAuthorizedFetch from '../lib/useAuthorizedFetch'
 import { activitiesByDayState, deletingActivityState, selectedCalendarEventState, selectedDateState } from '../recoil/atoms'
@@ -13,8 +14,6 @@ function Event({ENDPOINT, capitalizeFirstLetter}) {
     const [deletingActivity, setDeletingActivity] = useRecoilState(deletingActivityState)
 
     const navigate = useNavigate()
-    
-    // console.log(selectedCalendarEvent[0])
 
     const authFetchActiveDayActivities = useAuthorizedFetch(`${ENDPOINT}/active_days/${selectedCalendarEvent[0]}/activities`)
     const authFetchActiveDay = useAuthorizedFetch(`${ENDPOINT}/active_days/${selectedCalendarEvent[0]}`)
@@ -53,7 +52,7 @@ function Event({ENDPOINT, capitalizeFirstLetter}) {
 
 
   return (
-    !selectedDate ? <Box>kas;dkfj</Box> : (
+
     <Box>
         <Grid container direction={'column'} alignContent='center'>
             <Grid item>
@@ -156,12 +155,22 @@ function Event({ENDPOINT, capitalizeFirstLetter}) {
                         {distanceSum} miles
                     </Typography>
                     </CardContent>
+                    <Box display={'flex'}>
+                        <CardActions sx={{ m: 'auto'}}>
+                            <Button 
+                                variant='outlined'
+                                component={Link}
+                                to='/'
+                            >
+                                Back To Calendar
+                            </Button>
+                        </CardActions>
+                    </Box>
                 </Card>
             </Grid>
         </Grid>
     </Box>
     )
-  )
 }
 
 export default Event

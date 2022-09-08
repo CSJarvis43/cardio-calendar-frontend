@@ -15,10 +15,10 @@ function Event({ENDPOINT, capitalizeFirstLetter}) {
 
     const navigate = useNavigate()
 
-    const authFetchActiveDayActivities = useAuthorizedFetch(`${ENDPOINT}/active_days/${selectedCalendarEvent[0]}/activities`)
-    const authFetchActiveDay = useAuthorizedFetch(`${ENDPOINT}/active_days/${selectedCalendarEvent[0]}`)
+    const authFetchActiveDayActivities = useAuthorizedFetch(`${ENDPOINT}/active_days/${selectedCalendarEvent}/activities`)
+    const authFetchActiveDay = useAuthorizedFetch(`${ENDPOINT}/active_days/${selectedCalendarEvent}`)
 
-    // console.log(selectedCalendarEvent[0])
+    // console.log(selectedCalendarEvent)
 
 
     useEffect(() => {

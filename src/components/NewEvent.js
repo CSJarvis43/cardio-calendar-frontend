@@ -1,28 +1,32 @@
 import React, { useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { addEventDateState, newEventDataState, currentUser, activeDaysForNewEventState } from '../recoil/atoms'
+import { addEventDateState, newEventDataState, currentUser, activeDaysForNewEventState, multipleActivitiesSameDayState } from '../recoil/atoms'
 import { Link } from 'react-router-dom'
 import { Button, Container, FormControl, Grid, InputLabel, MenuItem, Rating, Select, TextField, Typography } from '@mui/material'
 import DatePicker from './DatePicker'
 import useAuthorizedFetch from '../lib/useAuthorizedFetch'
+import dayjs from 'dayjs'
 
 function NewEvent({ ENDPOINT }) {
 
   const [newEventData, setNewEventData] = useRecoilState(newEventDataState)
   const [addEventDate, setAddEventDate] = useRecoilState(addEventDateState)
   const [activeDaysForNewEvent, setActiveDaysForNewEvent] = useRecoilState(activeDaysForNewEventState)
+  const [multipleActivitiesSameDay, setMultipleActivitiesSameDay] = useRecoilState(multipleActivitiesSameDayState)
   const user = useRecoilValue(currentUser)
 
   const authFetchActiveDays = useAuthorizedFetch(`${ENDPOINT}/active_days/`)
   const authFetchSubmitNewEvent = useAuthorizedFetch(`${ENDPOINT}/active_days/`, 'POST')
   const authFetchSubmitNewActivity = useAuthorizedFetch(`${ENDPOINT}/activities/`, 'POST')
 
+
   
   useEffect(() => {
-    authFetchActiveDays().then(json => json.filter(e => e.user_id === user.id)).then(j => setActiveDaysForNewEvent(j[j.length -1]))
+    authFetchActiveDays().then(json => json.filter(e => e.user_id === user.id)).then(j => j.length > 0 ? setActiveDaysForNewEvent(j[j.length -1]) : setActiveDaysForNewEvent({ date: new Date('2020, 1, 1')}))
+    authFetchActiveDays().then(json => json.filter(e => e.user_id === user.id)).then(d => setMultipleActivitiesSameDay(d))
   }, [])
-  
-  // console.log(activeDaysForNewEvent)
+
+  // console.log(multipleActivitiesSameDay)
   
   function handleFormChange(e) {
     const name = e.target.name
@@ -35,7 +39,7 @@ function NewEvent({ ENDPOINT }) {
   }
   
   const transformedEventDate = {
-    date: new Date(addEventDate.$y, addEventDate.$M, addEventDate.$D),
+    date: new Date(addEventDate.$y, addEventDate.$M, addEventDate.$D, '18', '00', '00'),
     
   }
 
@@ -62,9 +66,9 @@ function NewEvent({ ENDPOINT }) {
       }
     }
 
-    // console.log(newActiveDayObj)
+    console.log(newActiveDayObj)
     authFetchSubmitNewEvent(newActiveDayObj)
-    .then(r => r.status === 422 ? alert('An activity already exists for this day, please click on the day to edit your activity log') : r.json().then(json => handleActivityPost(json)))
+    .then(r => r.status === 422 ? handleMultipleActivitySameDay(newActiveDayObj) : r.json().then(json => handleActivityPost(json)))
   }
 
   function handleActivityPost(active_day) {
@@ -75,11 +79,32 @@ function NewEvent({ ENDPOINT }) {
     }
 
     authFetchSubmitNewActivity(transfomedNewEventData)
-    console.log(transfomedNewEventData)
+    // console.log(transfomedNewEventData)
   }
   
+  function handleMultipleActivitySameDay(newActiveDayObj) {
+
+    const publishedDate = new Date(newActiveDayObj.active_day.date).getTime()
+    const duplicateSubmittedDates = multipleActivitiesSameDay.map(d => {
+      const container = {}
+      
+      container.id = d.id
+      container.date = new Date(d.date).getTime()
+      
+      return container
+    })
 
 
+    const matchingDuplicateDates = duplicateSubmittedDates.filter(d => d.date === publishedDate)
+    
+    const transformedDuplicateEventDayData = {
+      ...newEventData,
+      active_day_id: matchingDuplicateDates[0].id
+    }
+
+    authFetchSubmitNewActivity(transformedDuplicateEventDayData)
+  }
+  
 
 
   return (
@@ -163,8 +188,8 @@ function NewEvent({ ENDPOINT }) {
                 sx={{ m: 2 }}
                 onClick={handleNewEventSubmit}
                 variant="contained"
-                // component={Link}
-                // to='/'
+                component={Link}
+                to='/'
             >
                 Submit
             </Button>

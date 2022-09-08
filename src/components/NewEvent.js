@@ -14,50 +14,54 @@ function NewEvent({ ENDPOINT }) {
   const user = useRecoilValue(currentUser)
 
   const authFetchActiveDays = useAuthorizedFetch(`${ENDPOINT}/active_days/`)
+  const authFetchSubmitNewEvent = useAuthorizedFetch(`${ENDPOINT}/active_days/`, 'POST')
 
-  const authFetchSubmitNewEvent = useAuthorizedFetch(`${ENDPOINT}/active_days/`, 'POST', newActiveDayObj)
-
+  
   useEffect(() => {
     authFetchActiveDays().then(json => json.filter(e => e.user_id === user.id)).then(j => setActiveDaysForNewEvent(j[j.length -1]))
   }, [])
-
+  
   console.log(activeDaysForNewEvent)
-
+  
   function handleFormChange(e) {
     const name = e.target.name
     let value = e.target.value
-
+    
     setNewEventData({
       ...newEventData,
       [name]: value,
     })
   }
-
+  
   const transformedEventDate = {
     date: new Date(addEventDate.$y, addEventDate.$M, addEventDate.$D),
-
+    
   }
-
+  
   function getDayName(dateStr, locale) {
     let date = new Date(dateStr)
     return date.toLocaleDateString(locale, { weekday: 'long' })
   }
-
+  
   function handleNewEventSubmit() {
-
+    
     const dayToDayOfWeek = transformedEventDate.date
     const diff = Math.floor((Date.parse(activeDaysForNewEvent.date) - Date.parse(transformedEventDate.date)) / 86400000)
     console.log(diff)
     
     const newActiveDayObj = {
-      date: transformedEventDate.date,
-      day_of_week: getDayName(dayToDayOfWeek, 'en-US'),
-      streak: diff >= -2 ? activeDaysForNewEvent.streak + 1 : 1
-      
+        active_day: {
+        date: transformedEventDate.date,
+        day_of_week: getDayName(dayToDayOfWeek, 'en-US'),
+        streak: diff >= -2 ? activeDaysForNewEvent.streak + 1 : 1,
+        user_id: user.id
+      }
     }
-    // const authFetchSubmitNewEvent = useAuthorizedFetch(`${ENDPOINT}/active_days/`, 'POST', newActiveDayObj)
-    authFetchSubmitNewEvent().then(console.log)
+
+    console.log(newActiveDayObj)
+    authFetchSubmitNewEvent(newActiveDayObj).then(console.log)
   }
+  
 
 
 

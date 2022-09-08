@@ -1,6 +1,6 @@
-export default function useAuthorizedFetch(endpoint, method='GET', body=null) {
+export default function useAuthorizedFetch(endpoint, method='GET') {
 
-    return function() {
+    return function(body=null) {
         return fetch(endpoint, {
             method: method,
             headers: {
@@ -8,7 +8,7 @@ export default function useAuthorizedFetch(endpoint, method='GET', body=null) {
                 "Content-Type": "application/json",
                 Accept: "application/json"
             },
-            body: body
+            body: method === 'GET' ? body : JSON.stringify(body)
         }).then(r => r.json())
     }
 }

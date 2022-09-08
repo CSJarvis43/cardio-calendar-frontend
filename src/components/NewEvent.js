@@ -15,13 +15,14 @@ function NewEvent({ ENDPOINT }) {
 
   const authFetchActiveDays = useAuthorizedFetch(`${ENDPOINT}/active_days/`)
   const authFetchSubmitNewEvent = useAuthorizedFetch(`${ENDPOINT}/active_days/`, 'POST')
+  const authFetchSubmitNewActivity = useAuthorizedFetch(`${ENDPOINT}/activities/`, 'POST')
 
   
   useEffect(() => {
     authFetchActiveDays().then(json => json.filter(e => e.user_id === user.id)).then(j => setActiveDaysForNewEvent(j[j.length -1]))
   }, [])
   
-  console.log(activeDaysForNewEvent)
+  // console.log(activeDaysForNewEvent)
   
   function handleFormChange(e) {
     const name = e.target.name
@@ -37,6 +38,9 @@ function NewEvent({ ENDPOINT }) {
     date: new Date(addEventDate.$y, addEventDate.$M, addEventDate.$D),
     
   }
+
+  // console.log(transformedEventDate)
+  // console.log(activeDaysForNewEvent)
   
   function getDayName(dateStr, locale) {
     let date = new Date(dateStr)
@@ -47,19 +51,31 @@ function NewEvent({ ENDPOINT }) {
     
     const dayToDayOfWeek = transformedEventDate.date
     const diff = Math.floor((Date.parse(activeDaysForNewEvent.date) - Date.parse(transformedEventDate.date)) / 86400000)
-    console.log(diff)
+    // console.log(diff)
     
     const newActiveDayObj = {
         active_day: {
         date: transformedEventDate.date,
         day_of_week: getDayName(dayToDayOfWeek, 'en-US'),
-        streak: diff >= -2 ? activeDaysForNewEvent.streak + 1 : 1,
+        streak: diff >= -2 && diff <= 0 ? activeDaysForNewEvent.streak + 1 : 1,
         user_id: user.id
       }
     }
 
-    console.log(newActiveDayObj)
-    authFetchSubmitNewEvent(newActiveDayObj).then(console.log)
+    // console.log(newActiveDayObj)
+    authFetchSubmitNewEvent(newActiveDayObj)
+    .then(r => r.status === 422 ? alert('An activity already exists for this day, please click on the day to edit your activity log') : r.json().then(json => handleActivityPost(json)))
+  }
+
+  function handleActivityPost(active_day) {
+    
+    const transfomedNewEventData = {
+      ...newEventData,
+      active_day_id: active_day.active_day.id
+    }
+
+    authFetchSubmitNewActivity(transfomedNewEventData)
+    console.log(transfomedNewEventData)
   }
   
 
@@ -147,6 +163,8 @@ function NewEvent({ ENDPOINT }) {
                 sx={{ m: 2 }}
                 onClick={handleNewEventSubmit}
                 variant="contained"
+                // component={Link}
+                // to='/'
             >
                 Submit
             </Button>

@@ -64,7 +64,7 @@ function Home({ ENDPOINT }) {
         eventClick={function(arg){
           setSelectedCalendarEvent(arg.event.id)
           navigate('/event')
-          // console.log(selectedCalendarEvent)
+          console.log(selectedCalendarEvent)
         }}
       />
     </Grid>

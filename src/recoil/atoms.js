@@ -38,7 +38,7 @@ export const activityEventsState = atom({
 
 export const selectedCalendarEventState = atom({
     key: "selectedCalendarEventState",
-    default: [1],
+    default: 0,
 })
 
 export const activitiesByDayState = atom({
@@ -80,5 +80,5 @@ export const addEventDateState = atom({
 
 export const activeDaysForNewEventState = atom({
     key: "activeDaysForNewEventState",
-    default: []
+    default: dayjs('2019-01-25')
 })

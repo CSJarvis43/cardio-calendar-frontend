@@ -18,13 +18,15 @@ function Event({ENDPOINT, capitalizeFirstLetter}) {
     const authFetchActiveDayActivities = useAuthorizedFetch(`${ENDPOINT}/active_days/${selectedCalendarEvent[0]}/activities`)
     const authFetchActiveDay = useAuthorizedFetch(`${ENDPOINT}/active_days/${selectedCalendarEvent[0]}`)
 
+    // console.log(selectedCalendarEvent[0])
+
 
     useEffect(() => {
         authFetchActiveDayActivities().then(setActivitiesByDay)
         authFetchActiveDay().then(setSelectedDate)
     }, [deletingActivity])
 
-    console.log(activitiesByDay)
+    // console.log(activitiesByDay)
 
     const calorieSum = activitiesByDay.reduce((acc, obj) => {
         return acc + obj.calories

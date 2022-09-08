@@ -15,6 +15,8 @@ function NewEvent({ ENDPOINT }) {
 
   const authFetchActiveDays = useAuthorizedFetch(`${ENDPOINT}/active_days/`)
 
+  const authFetchSubmitNewEvent = useAuthorizedFetch(`${ENDPOINT}/active_days/`, 'POST', newActiveDayObj)
+
   useEffect(() => {
     authFetchActiveDays().then(json => json.filter(e => e.user_id === user.id)).then(j => setActiveDaysForNewEvent(j[j.length -1]))
   }, [])
@@ -44,14 +46,20 @@ function NewEvent({ ENDPOINT }) {
   function handleNewEventSubmit() {
 
     const dayToDayOfWeek = transformedEventDate.date
+    const diff = Math.floor((Date.parse(activeDaysForNewEvent.date) - Date.parse(transformedEventDate.date)) / 86400000)
+    console.log(diff)
     
     const newActiveDayObj = {
       date: transformedEventDate.date,
-      day_of_week: getDayName(dayToDayOfWeek, 'en-US')
+      day_of_week: getDayName(dayToDayOfWeek, 'en-US'),
+      streak: diff >= -2 ? activeDaysForNewEvent.streak + 1 : 1
       
     }
-    console.log(newActiveDayObj)
+    // const authFetchSubmitNewEvent = useAuthorizedFetch(`${ENDPOINT}/active_days/`, 'POST', newActiveDayObj)
+    authFetchSubmitNewEvent().then(console.log)
   }
+
+
 
 
   return (

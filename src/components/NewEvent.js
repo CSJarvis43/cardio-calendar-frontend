@@ -39,7 +39,7 @@ function NewEvent({ ENDPOINT }) {
   }
   
   const transformedEventDate = {
-    date: new Date(addEventDate.$y, addEventDate.$M, addEventDate.$D, '18', '00', '00'),
+    date: new Date(addEventDate.$y, addEventDate.$M, addEventDate.$D),
     
   }
 
@@ -66,7 +66,7 @@ function NewEvent({ ENDPOINT }) {
       }
     }
 
-    console.log(newActiveDayObj)
+    // console.log(newActiveDayObj)
     authFetchSubmitNewEvent(newActiveDayObj)
     .then(r => r.status === 422 ? handleMultipleActivitySameDay(newActiveDayObj) : r.json().then(json => handleActivityPost(json)))
   }
@@ -84,18 +84,35 @@ function NewEvent({ ENDPOINT }) {
   
   function handleMultipleActivitySameDay(newActiveDayObj) {
 
+    console.log(multipleActivitiesSameDay)
+
     const publishedDate = new Date(newActiveDayObj.active_day.date).getTime()
     const duplicateSubmittedDates = multipleActivitiesSameDay.map(d => {
       const container = {}
       
       container.id = d.id
-      container.date = new Date(d.date).getTime()
+      container.date = new Date(d.date).getTime() + 21600000
       
       return container
     })
 
+    console.log(publishedDate)
+
+    console.log(duplicateSubmittedDates.map(d =>{
+      const container = {}
+      
+      container.number = d.date
+      container.date = new Date(d.date)
+      container.id = d.id
+      
+      return container
+    })
+    )
 
     const matchingDuplicateDates = duplicateSubmittedDates.filter(d => d.date === publishedDate)
+    
+    console.log(matchingDuplicateDates)
+
     
     const transformedDuplicateEventDayData = {
       ...newEventData,
@@ -105,6 +122,7 @@ function NewEvent({ ENDPOINT }) {
     authFetchSubmitNewActivity(transformedDuplicateEventDayData)
   }
   
+
 
 
   return (

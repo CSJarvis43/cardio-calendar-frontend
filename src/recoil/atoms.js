@@ -18,7 +18,7 @@ export const passwordState = atom({
 
 export const currentUser = atom({
     key: 'currentUser',
-    default: null,
+    default: [],
 })
 
 export const showPassword = atom({
@@ -38,7 +38,7 @@ export const activityEventsState = atom({
 
 export const selectedCalendarEventState = atom({
     key: "selectedCalendarEventState",
-    default: [1],
+    default: 0,
 })
 
 export const activitiesByDayState = atom({
@@ -80,5 +80,12 @@ export const addEventDateState = atom({
 
 export const activeDaysForNewEventState = atom({
     key: "activeDaysForNewEventState",
-    default: []
+    default: {
+        date: dayjs('2019-01-25')
+    }
+})
+
+export const multipleActivitiesSameDayState = atom({
+    key: "multipleActivitiesSameDayState",
+    default: [],
 })

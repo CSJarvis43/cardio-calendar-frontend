@@ -59,9 +59,16 @@ export default function NavBar({handleLogout}) {
                     <MenuItem 
                         onClick={handleClose}
                         component={Link}
-                        to='/'
+                        to='/home'
                     >
                         Home
+                    </MenuItem>
+                    <MenuItem 
+                        onClick={handleClose}
+                        component={Link}
+                        to='/calculator'
+                    >
+                        Calorie Calculator
                     </MenuItem>
                 </Menu>
                 <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
@@ -72,7 +79,7 @@ export default function NavBar({handleLogout}) {
                     <Button 
                         color="inherit"
                         component={Link}
-                        to='/login'
+                        to='/'
                     >
                         Login
                     </Button>
@@ -93,7 +100,7 @@ export default function NavBar({handleLogout}) {
                             color="inherit"
                             onClick={handleLogout}
                             component={Link}
-                            to='/login'
+                            to='/'
                         >
                             Logout
                         </Button>

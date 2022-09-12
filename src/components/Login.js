@@ -33,7 +33,7 @@ function Login({setUser, ENDPOINT}) {
             setUser(r.user)
             setUsername('')
             setPassword('')
-            navigate('/')
+            navigate('/home')
         })
     }
 

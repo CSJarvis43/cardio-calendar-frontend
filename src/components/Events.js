@@ -13,8 +13,6 @@ function Event({ENDPOINT, capitalizeFirstLetter}) {
     const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState)
     const [deletingActivity, setDeletingActivity] = useRecoilState(deletingActivityState)
 
-    const navigate = useNavigate()
-
     const authFetchActiveDayActivities = useAuthorizedFetch(`${ENDPOINT}/active_days/${selectedCalendarEvent}/activities`)
     const authFetchActiveDay = useAuthorizedFetch(`${ENDPOINT}/active_days/${selectedCalendarEvent}`)
 
@@ -162,7 +160,7 @@ function Event({ENDPOINT, capitalizeFirstLetter}) {
                             <Button 
                                 variant='outlined'
                                 component={Link}
-                                to='/'
+                                to='/home'
                             >
                                 Back To Calendar
                             </Button>

@@ -79,7 +79,14 @@ function NewEvent({ ENDPOINT }) {
     }
 
     authFetchSubmitNewActivity(transfomedNewEventData)
-    // console.log(transfomedNewEventData)
+    setNewEventData({
+      ...newEventData,
+      exercise_type: "",
+        calories: '',
+        activity_length: '',
+        distance: '',
+        rating: 0
+    })
   }
   
   function handleMultipleActivitySameDay(newActiveDayObj) {
@@ -120,6 +127,14 @@ function NewEvent({ ENDPOINT }) {
     }
 
     authFetchSubmitNewActivity(transformedDuplicateEventDayData)
+    setNewEventData({
+      ...newEventData,
+      exercise_type: "",
+        calories: '',
+        activity_length: '',
+        distance: '',
+        rating: 0
+    })
   }
   
 
@@ -207,7 +222,7 @@ function NewEvent({ ENDPOINT }) {
                 onClick={handleNewEventSubmit}
                 variant="contained"
                 component={Link}
-                to='/'
+                to='/home'
             >
                 Submit
             </Button>

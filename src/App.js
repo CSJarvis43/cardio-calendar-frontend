@@ -9,6 +9,7 @@ import Home from "./components/Home";
 import { useEffect } from "react";
 import Events from "./components/Events";
 import NewEvent from "./components/NewEvent";
+import CalorieCalculator from "./components/CalorieCalculator";
 
 function App() {
 
@@ -59,13 +60,13 @@ function App() {
         <NavBar handleLogout={handleLogout}/>
         <Routes>
           <Route
-            path="/"
+            path="/home"
             element={
                 <Home ENDPOINT={ENDPOINT}/>
             }
           />
           <Route
-            path="/login"
+            path="/"
             element={
                 <Login 
                   setUser={setUser}
@@ -97,6 +98,12 @@ function App() {
                 <NewEvent
                 ENDPOINT={ENDPOINT}
                 />
+            }
+          />
+          <Route 
+            path="/calculator"
+            element={
+              <CalorieCalculator />
             }
           />
         </Routes>

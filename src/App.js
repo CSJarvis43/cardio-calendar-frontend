@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { currentUser } from "./recoil/atoms";
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
@@ -9,10 +9,11 @@ import Home from "./components/Home";
 import { useEffect } from "react";
 import Events from "./components/Events";
 import NewEvent from "./components/NewEvent";
+import CalorieCalculator from "./components/CalorieCalculator";
 
 function App() {
 
-  const [user, setUser] = useRecoilState(currentUser)
+  const setUser = useSetRecoilState(currentUser)
 
   const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://cardio-calendar.herokuapp.com' : 'http://localhost:3000'
 
@@ -59,13 +60,13 @@ function App() {
         <NavBar handleLogout={handleLogout}/>
         <Routes>
           <Route
-            path="/"
+            path="/home"
             element={
                 <Home ENDPOINT={ENDPOINT}/>
             }
           />
           <Route
-            path="/login"
+            path="/"
             element={
                 <Login 
                   setUser={setUser}
@@ -97,6 +98,14 @@ function App() {
                 <NewEvent
                 ENDPOINT={ENDPOINT}
                 />
+            }
+          />
+          <Route 
+            path="/calculator"
+            element={
+              <CalorieCalculator 
+                capitalizeFirstLetter={capitalizeFirstLetter}
+              />
             }
           />
         </Routes>

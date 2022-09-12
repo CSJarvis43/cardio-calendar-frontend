@@ -65,9 +65,9 @@ export const newEventDataState = atom({
     key: 'newEventDataState',
     default: {
         exercise_type: "",
-        calories: 0,
-        activity_length: 0,
-        distance: 0,
+        calories: '',
+        activity_length: '',
+        distance: '',
         rating: 0,
         active_day_id: null
     },
@@ -88,4 +88,13 @@ export const activeDaysForNewEventState = atom({
 export const multipleActivitiesSameDayState = atom({
     key: "multipleActivitiesSameDayState",
     default: [],
+})
+
+export const calorieCalculatorValueState = atom({
+    key: "calorieCalculatorValueState",
+    default: {
+        activity_length: '',
+        weight: '',
+        exercise_type: ''
+    },
 })

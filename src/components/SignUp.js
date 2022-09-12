@@ -49,7 +49,7 @@ function SignUp({ setUser, ENDPOINT }) {
                     setLoggedIn(true)
                 })
                 setErrorMessage("")
-                navigate('/')
+                navigate('/home')
             }
         })
         .catch((r) => 
@@ -100,7 +100,7 @@ function SignUp({ setUser, ENDPOINT }) {
                         <Button
                         variant='contained'
                         component={Link}
-                        to="/login"
+                        to="/"
                         >
                         Log In Instead
                     </Button>

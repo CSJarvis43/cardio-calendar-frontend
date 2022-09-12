@@ -7,16 +7,15 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { MenuItem, Menu } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { currentUser } from '../recoil/atoms';
+import { Link } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { currentUser, newEventDataState } from '../recoil/atoms';
 
 export default function NavBar({handleLogout}) {
 
     const [anchorEl, setAnchorEl] = React.useState(null)
-    const [user, setUser] = useRecoilState(currentUser)
-
-    const navigate = useNavigate()
+    const user = useRecoilValue(currentUser)
+    const setNewEventData = useSetRecoilState(newEventDataState)
     
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -25,6 +24,17 @@ export default function NavBar({handleLogout}) {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleClear = () => {
+        setNewEventData({
+            exercise_type: "",
+            calories: '',
+            activity_length: '',
+            distance: '',
+            rating: 0,
+            active_day_id: null
+        })
+    }
 
 
     return (
@@ -59,9 +69,19 @@ export default function NavBar({handleLogout}) {
                     <MenuItem 
                         onClick={handleClose}
                         component={Link}
-                        to='/'
+                        to='/home'
                     >
                         Home
+                    </MenuItem>
+                    <MenuItem 
+                        onClick={() => {
+                            handleClose()
+                            handleClear()
+                        }}
+                        component={Link}
+                        to='/calculator'
+                    >
+                        Calorie Calculator
                     </MenuItem>
                 </Menu>
                 <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
@@ -72,7 +92,7 @@ export default function NavBar({handleLogout}) {
                     <Button 
                         color="inherit"
                         component={Link}
-                        to='/login'
+                        to='/'
                     >
                         Login
                     </Button>
@@ -93,7 +113,7 @@ export default function NavBar({handleLogout}) {
                             color="inherit"
                             onClick={handleLogout}
                             component={Link}
-                            to='/login'
+                            to='/'
                         >
                             Logout
                         </Button>

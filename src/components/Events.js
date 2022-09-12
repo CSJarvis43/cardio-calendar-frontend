@@ -53,7 +53,7 @@ function Event({ENDPOINT, capitalizeFirstLetter}) {
 
   return (
 
-    <Box>
+    <Box sx={{ backgroundImage: "url('https://i.imgur.com/dCWPd7I.jpg')", backgroundRepeat: 'repeat'}}>
         <Grid container direction={'column'} alignContent='center'>
             <Grid item>
                 <Paper elevation={20} sx={{ p: 2, width: '60vw', border: 3, borderColor: 'primary.main', mb: 5}}>

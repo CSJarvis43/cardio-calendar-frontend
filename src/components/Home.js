@@ -4,10 +4,10 @@ import useAuthorizedFetch from '../lib/useAuthorizedFetch'
 import "react-big-calendar/lib/css/react-big-calendar.css"
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { activityEventsState, currentUser, selectedCalendarEventState } from '../recoil/atoms'
-import './Home.css'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import { useNavigate } from 'react-router-dom'
+import { StyleWrapper } from './StyleWrapper'
 
 
 
@@ -41,32 +41,37 @@ function Home({ ENDPOINT }) {
 
   return (
     
-    <Grid>
-      <FullCalendar 
-        plugins={[dayGridPlugin]}
-        events={transformedEvents}
-        editable={true}
-        selectable={true}
-        aspectRatio={2.2}
-        defaultAllDay={true}
-        customButtons={{
-          addEventButton: {
-            text: 'Add an Activity',
-            click: function() {
-              navigate('/new_event')
-            }
-          }
-        }}
-        headerToolbar={{
-          start: 'title',
-          center: 'addEventButton'
-        }}
-        eventClick={function(arg){
-          setSelectedCalendarEvent(arg.event.id)
-          navigate('/event')
-          // console.log(selectedCalendarEvent)
-        }}
-      />
+    <Grid container alignContent='center'>
+      <Grid item xs={10} sx={{ m: 'auto'}}>
+        <StyleWrapper>
+          <FullCalendar 
+            plugins={[dayGridPlugin]}
+            events={transformedEvents}
+            editable={true}
+            selectable={true}
+            aspectRatio={2.5}
+            defaultAllDay={true}
+            eventColor={'#a40000'}
+            customButtons={{
+              addEventButton: {
+                text: 'Add an Activity',
+                click: function() {
+                  navigate('/new_event')
+                }
+              }
+            }}
+            headerToolbar={{
+              start: 'title',
+              center: 'addEventButton'
+            }}
+            eventClick={function(arg){
+              setSelectedCalendarEvent(arg.event.id)
+              navigate('/event')
+              // console.log(selectedCalendarEvent)
+            }}
+          />
+        </StyleWrapper>
+      </Grid>
     </Grid>
 
 

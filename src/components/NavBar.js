@@ -39,7 +39,7 @@ export default function NavBar({handleLogout}) {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="fixed">
             <Toolbar>
                 <IconButton
                     size="large"
@@ -84,8 +84,9 @@ export default function NavBar({handleLogout}) {
                         Calorie Calculator
                     </MenuItem>
                 </Menu>
-                <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-                    Cardio Calendar
+                <img src='https://i.imgur.com/VBxxGqx.png' height={'65vh'}/>
+                <Typography variant="h5" component="div" sx={{ flexGrow: 1, ml: 4 }}>
+                    Cardio Tracker
                 </Typography>
                 {!user ? (
                     <Box>
@@ -121,6 +122,7 @@ export default function NavBar({handleLogout}) {
                 )}
             </Toolbar>
             </AppBar>
+            <Toolbar />
         </Box>
     );
 }

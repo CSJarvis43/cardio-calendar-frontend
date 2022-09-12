@@ -1,9 +1,10 @@
-import { FormControl, Grid, Typography, InputLabel, Select, MenuItem, TextField, Button, Paper } from '@mui/material'
+import { FormControl, Grid, Typography, InputLabel, Select, MenuItem, TextField, Button, Card, CardContent, CardActions } from '@mui/material'
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import { calorieCalculatorValueState, newEventDataState } from '../recoil/atoms'
+import { Link } from 'react-router-dom'
 
-function CalorieCalculator() {
+function CalorieCalculator({ capitalizeFirstLetter }) {
 
     const [newEventData, setNewEventData] = useRecoilState(newEventDataState)
     const [calorieCalculatorValue, setCalorieCalculatorValue] = useRecoilState(calorieCalculatorValueState)
@@ -80,6 +81,8 @@ function CalorieCalculator() {
                     })
                 break
 
+            default: console.error('No/not enough values receieved')
+
         }
         setCalorieCalculatorValue({
             ...calorieCalculatorValue,
@@ -148,25 +151,38 @@ function CalorieCalculator() {
                 >
                     Calculate
                 </Button>
-
                 </FormControl>
             </Grid>
             {newEventData.exercise_type.length > 0 ? (
             <Grid item xs={12} align="center">
-                <Paper elevation={20} sx={{ p: 2, width: '40vw', border: 3, borderColor: 'primary.main', mb: 5}}>
-                    <Typography variant='h5'>
-                        {`You would burn ${newEventData.calories} calories on a ${newEventData.activity_length} minute ${newEventData.exercise_type}`}
-                    </Typography>
-                </Paper>
-                <Button
-                    sx={{ m: 2 }}
-                    // onClick={handleNewEventSubmit}
-                    variant="contained"
-                    // component={Link}
-                    // to='/'
+                <Card 
+                    raised={true} 
+                    sx={{ m: 1, border: .5, borderColor: 'primary.main', width: 600}}
                 >
-                    Add a New Event
-                </Button>
+                    <CardContent>
+                        <Typography variant='h5'>
+                            {`You burn ${newEventData.calories} calories on a ${newEventData.activity_length} minute ${capitalizeFirstLetter(newEventData.exercise_type)}`}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button
+                            sx={{ m: 'auto' }}
+                            variant="contained"
+                            component={Link}
+                            to='/new_event'
+                            >
+                            Add a New Event
+                        </Button>
+                        <Button
+                            sx={{ m: 'auto' }}
+                            variant="contained"
+                            component={Link}
+                            to='/home'
+                            >
+                            Back to Calendar
+                        </Button>
+                    </CardActions>
+                </Card>
             </Grid>
             ) : (
                 null

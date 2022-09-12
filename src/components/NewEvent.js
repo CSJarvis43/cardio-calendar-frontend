@@ -2,15 +2,14 @@ import React, { useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { addEventDateState, newEventDataState, currentUser, activeDaysForNewEventState, multipleActivitiesSameDayState } from '../recoil/atoms'
 import { Link } from 'react-router-dom'
-import { Button, Container, FormControl, Grid, InputLabel, MenuItem, Rating, Select, TextField, Typography } from '@mui/material'
+import { Button, FormControl, Grid, InputLabel, MenuItem, Rating, Select, TextField, Typography } from '@mui/material'
 import DatePicker from './DatePicker'
 import useAuthorizedFetch from '../lib/useAuthorizedFetch'
-import dayjs from 'dayjs'
 
 function NewEvent({ ENDPOINT }) {
 
   const [newEventData, setNewEventData] = useRecoilState(newEventDataState)
-  const [addEventDate, setAddEventDate] = useRecoilState(addEventDateState)
+  const addEventDate = useRecoilValue(addEventDateState)
   const [activeDaysForNewEvent, setActiveDaysForNewEvent] = useRecoilState(activeDaysForNewEventState)
   const [multipleActivitiesSameDay, setMultipleActivitiesSameDay] = useRecoilState(multipleActivitiesSameDayState)
   const user = useRecoilValue(currentUser)
@@ -91,8 +90,6 @@ function NewEvent({ ENDPOINT }) {
   
   function handleMultipleActivitySameDay(newActiveDayObj) {
 
-    console.log(multipleActivitiesSameDay)
-
     const publishedDate = new Date(newActiveDayObj.active_day.date).getTime()
     const duplicateSubmittedDates = multipleActivitiesSameDay.map(d => {
       const container = {}
@@ -103,22 +100,7 @@ function NewEvent({ ENDPOINT }) {
       return container
     })
 
-    console.log(publishedDate)
-
-    console.log(duplicateSubmittedDates.map(d =>{
-      const container = {}
-      
-      container.number = d.date
-      container.date = new Date(d.date)
-      container.id = d.id
-      
-      return container
-    })
-    )
-
     const matchingDuplicateDates = duplicateSubmittedDates.filter(d => d.date === publishedDate)
-    
-    console.log(matchingDuplicateDates)
 
     
     const transformedDuplicateEventDayData = {

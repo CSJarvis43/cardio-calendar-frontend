@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { currentUser } from "./recoil/atoms";
-import { Box } from "@mui/material";
+import { Box, ThemeProvider } from "@mui/material";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import Events from "./components/Events";
 import NewEvent from "./components/NewEvent";
 import CalorieCalculator from "./components/CalorieCalculator";
+import { theme } from "./components/Theme";
 
 function App() {
 
@@ -56,60 +57,62 @@ function App() {
   return (
 
     <Router basename={"/cardio-calendar-frontend"}>
-      <Box className="App">
-        <NavBar handleLogout={handleLogout}/>
-        <Routes>
-          <Route
-            path="/home"
-            element={
-                <Home ENDPOINT={ENDPOINT}/>
-            }
-          />
-          <Route
-            path="/"
-            element={
-                <Login 
-                  setUser={setUser}
+      <ThemeProvider theme={theme}>
+        <Box className="App" sx={{ backgroundImage: "url('https://i.imgur.com/qEnw5La.png')", backgroundSize: "cover", height: '100vh', backgroundRepeat: 'repeat'}}>
+          <NavBar handleLogout={handleLogout}/>
+          <Routes>
+            <Route
+              path="/home"
+              element={
+                  <Home ENDPOINT={ENDPOINT}/>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                  <Login 
+                    setUser={setUser}
+                    ENDPOINT={ENDPOINT}
+                  />
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                  <SignUp 
+                    setUser={setUser}
+                    ENDPOINT={ENDPOINT}
+                  />
+              }
+            />
+            <Route
+              path="/event"
+              element={
+                  <Events
                   ENDPOINT={ENDPOINT}
-                />
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-                <SignUp 
-                  setUser={setUser}
+                  capitalizeFirstLetter={capitalizeFirstLetter}
+                  />
+              }
+            />
+            <Route
+              path="/new_event"
+              element={
+                  <NewEvent
                   ENDPOINT={ENDPOINT}
+                  />
+              }
+            />
+            <Route 
+              path="/calculator"
+              element={
+                <CalorieCalculator 
+                  capitalizeFirstLetter={capitalizeFirstLetter}
                 />
-            }
-          />
-          <Route
-            path="/event"
-            element={
-                <Events
-                ENDPOINT={ENDPOINT}
-                capitalizeFirstLetter={capitalizeFirstLetter}
-                />
-            }
-          />
-          <Route
-            path="/new_event"
-            element={
-                <NewEvent
-                ENDPOINT={ENDPOINT}
-                />
-            }
-          />
-          <Route 
-            path="/calculator"
-            element={
-              <CalorieCalculator 
-                capitalizeFirstLetter={capitalizeFirstLetter}
-              />
-            }
-          />
-        </Routes>
-      </Box>
+              }
+            />
+          </Routes>
+        </Box>
+      </ThemeProvider>
     </Router>
 
   );

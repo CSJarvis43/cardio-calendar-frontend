@@ -34,7 +34,7 @@ function App() {
   const GradientBox = styled('div')({
     background: `linear-gradient(19deg, #DC1C13, #EA4C46, #F07470, #F1959B, #F6BDC0)`,
     backgroundRepeat: 'repeat',
-    animation: `${gradient} 5s ease infinite`,
+    animation: `${gradient} 10s ease infinite`,
     backgroundSize: '200% 100%'
   })
 

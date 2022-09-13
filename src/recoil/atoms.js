@@ -38,7 +38,7 @@ export const activityEventsState = atom({
 
 export const selectedCalendarEventState = atom({
     key: "selectedCalendarEventState",
-    default: 0,
+    default: 1,
 })
 
 export const activitiesByDayState = atom({

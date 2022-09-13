@@ -131,7 +131,7 @@ function NewEvent({ ENDPOINT }) {
         direction='column'
         alignItems={'center'}
         justifyContent={'center'}
-        style={{ minHeight: '80vh'}}
+        style={{ minHeight: '95vh'}}
       >
         <Grid item xs={12} align="center" sx={{ pb: 3}}>
           <Typography variant='h4' justifySelf={'center'} sx={{ pb: 2 }}>

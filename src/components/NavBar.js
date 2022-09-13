@@ -41,49 +41,53 @@ export default function NavBar({handleLogout}) {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed">
             <Toolbar>
-                <IconButton
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                    sx={{ mr: 2 }}
-                    onClick={handleMenu}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                    }}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                >
-                    <MenuItem 
-                        onClick={handleClose}
-                        component={Link}
-                        to='/home'
-                    >
-                        Home
-                    </MenuItem>
-                    <MenuItem 
-                        onClick={() => {
-                            handleClose()
-                            handleClear()
-                        }}
-                        component={Link}
-                        to='/calculator'
-                    >
-                        Calorie Calculator
-                    </MenuItem>
-                </Menu>
+                {!user ? (null) : (
+                    <Box>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ mr: 2 }}
+                            onClick={handleMenu}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorEl}
+                            anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                            }}
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                        >
+                            <MenuItem 
+                                onClick={handleClose}
+                                component={Link}
+                                to='/home'
+                            >
+                                Home
+                            </MenuItem>
+                            <MenuItem 
+                                onClick={() => {
+                                    handleClose()
+                                    handleClear()
+                                }}
+                                component={Link}
+                                to='/calculator'
+                            >
+                                Calorie Calculator
+                            </MenuItem>
+                        </Menu>
+                    </Box>
+                )}
                 <img src='https://i.imgur.com/VBxxGqx.png' height={'65vh'}/>
                 <Typography variant="h5" component="div" sx={{ flexGrow: 1, ml: 4 }}>
                     Cardio Tracker

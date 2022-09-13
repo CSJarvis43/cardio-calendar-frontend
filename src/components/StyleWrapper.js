@@ -2,7 +2,7 @@ import styled from "@emotion/styled"
 
 export const StyleWrapper = styled.div`
     .fc-toolbar h2 {
-        color: #a40000;
+        color: white;
         font-size: 40px;
     }
 

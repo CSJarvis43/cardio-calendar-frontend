@@ -12,6 +12,7 @@ import NewEvent from "./components/NewEvent";
 import CalorieCalculator from "./components/CalorieCalculator";
 import { theme } from "./components/Theme";
 import { keyframes } from "@mui/system"
+import TopActivities from "./components/TopActivities";
 
 function App() {
 
@@ -127,6 +128,15 @@ function App() {
                 <CalorieCalculator 
                   capitalizeFirstLetter={capitalizeFirstLetter}
                 />
+              }
+            />
+            <Route
+              path="/top_activities"
+              element={
+                  <TopActivities
+                  ENDPOINT={ENDPOINT}
+                  GradientBox={GradientBox}
+                  />
               }
             />
           </Routes>

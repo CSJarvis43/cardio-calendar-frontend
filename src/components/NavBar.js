@@ -85,6 +85,13 @@ export default function NavBar({handleLogout}) {
                             >
                                 Calorie Calculator
                             </MenuItem>
+                            <MenuItem 
+                                onClick={handleClose}
+                                component={Link}
+                                to='/top_activities'
+                            >
+                                Your Personal Bests
+                            </MenuItem>
                         </Menu>
                     </Box>
                 )}

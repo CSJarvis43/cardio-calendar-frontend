@@ -103,3 +103,11 @@ export const calorieCalcStatementState = atom({
     key: 'calorieCalcStatementState',
     default: "",
 })
+
+export const personalRecordSelectState = atom({
+    key: 'personalRecordSelectState',
+    default: {
+        exercise_type: '',
+        sort_by: ''
+    },
+})

@@ -6,7 +6,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import useAuthorizedFetch from '../lib/useAuthorizedFetch'
 import { activitiesByDayState, deletingActivityState, selectedCalendarEventState, selectedDateState } from '../recoil/atoms'
 
-function Event({ENDPOINT, capitalizeFirstLetter}) {
+function Event({ENDPOINT, capitalizeFirstLetter, GradientBox}) {
 
     const selectedCalendarEvent = useRecoilValue(selectedCalendarEventState)
     const [activitiesByDay, setActivitiesByDay] = useRecoilState(activitiesByDayState)
@@ -53,7 +53,7 @@ function Event({ENDPOINT, capitalizeFirstLetter}) {
 
   return (
 
-    <Box sx={{ backgroundImage: "url('https://i.imgur.com/dCWPd7I.jpg')", backgroundRepeat: 'repeat'}}>
+    <GradientBox style={{ minHeight: '95vh'}}>
         <Grid container direction={'column'} alignContent='center'>
             <Grid item>
                 <Paper elevation={20} sx={{ p: 2, width: '60vw', border: 3, borderColor: 'primary.main', mb: 5}}>
@@ -111,10 +111,10 @@ function Event({ENDPOINT, capitalizeFirstLetter}) {
                             </CardContent>
                             <Box display={'flex'}>
                                 <CardActions sx={{ m: 'auto'}}>
-                                    <Button variant='outlined' sx={{ m: 'auto'}}>
+                                    <Button variant='contained' sx={{ m: 'auto' }}>
                                         edit
                                     </Button>
-                                    <Button variant='outlined' sx={{ m: 'auto'}} onClick={() => {
+                                    <Button variant='contained' sx={{ m: 'auto' }} onClick={() => {
                                             handleDeleteActivity(activity)
                                         }}>
                                         delete
@@ -158,7 +158,7 @@ function Event({ENDPOINT, capitalizeFirstLetter}) {
                     <Box display={'flex'}>
                         <CardActions sx={{ m: 'auto'}}>
                             <Button 
-                                variant='outlined'
+                                variant='contained'
                                 component={Link}
                                 to='/home'
                             >
@@ -169,7 +169,7 @@ function Event({ENDPOINT, capitalizeFirstLetter}) {
                 </Card>
             </Grid>
         </Grid>
-    </Box>
+    </GradientBox>
     )
 }
 

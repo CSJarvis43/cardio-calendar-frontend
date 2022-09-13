@@ -102,7 +102,7 @@ function CalorieCalculator({ capitalizeFirstLetter }) {
             direction='column'
             alignItems={'center'}
             justifyContent={'center'}
-            style={{ minHeight: '80vh'}}
+            style={{ minHeight: '95vh'}}
         >
             <Grid item xs={12} align="center">
                 <Typography variant='h4' justifySelf={'center'} sx={{ pb: 2 }} >

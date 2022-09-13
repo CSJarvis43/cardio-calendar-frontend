@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { currentUser } from "./recoil/atoms";
-import { Box, ThemeProvider } from "@mui/material";
+import { Box, styled, ThemeProvider } from "@mui/material";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
@@ -11,12 +11,32 @@ import Events from "./components/Events";
 import NewEvent from "./components/NewEvent";
 import CalorieCalculator from "./components/CalorieCalculator";
 import { theme } from "./components/Theme";
+import { keyframes } from "@mui/system"
 
 function App() {
 
   const setUser = useSetRecoilState(currentUser)
 
   const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://cardio-calendar.herokuapp.com' : 'http://localhost:3000'
+
+  const gradient = keyframes`
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+  `
+
+  const GradientBox = styled('div')({
+    background: `linear-gradient(19deg, #DC1C13, #EA4C46, #F07470, #F1959B, #F6BDC0)`,
+    backgroundRepeat: 'repeat',
+    animation: `${gradient} 5s ease infinite`,
+    backgroundSize: '200% 100%'
+  })
 
   useEffect(() => {
     let token = localStorage.token
@@ -46,8 +66,6 @@ function App() {
     localStorage.removeItem('token')
   }
 
-  // console.log(user)
-
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
@@ -58,7 +76,7 @@ function App() {
 
     <Router basename={"/cardio-calendar-frontend"}>
       <ThemeProvider theme={theme}>
-        <Box className="App" sx={{ backgroundImage: "url('https://i.imgur.com/qEnw5La.png')", backgroundSize: "cover", height: '100vh', backgroundRepeat: 'repeat'}}>
+        <GradientBox>
           <NavBar handleLogout={handleLogout}/>
           <Routes>
             <Route
@@ -91,6 +109,7 @@ function App() {
                   <Events
                   ENDPOINT={ENDPOINT}
                   capitalizeFirstLetter={capitalizeFirstLetter}
+                  GradientBox={GradientBox}
                   />
               }
             />
@@ -111,7 +130,7 @@ function App() {
               }
             />
           </Routes>
-        </Box>
+        </GradientBox>
       </ThemeProvider>
     </Router>
 

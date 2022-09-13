@@ -20,9 +20,16 @@ function Home({ ENDPOINT }) {
   const navigate = useNavigate()
   const eventAuthFetch = useAuthorizedFetch(`${ENDPOINT}/active_days`)
 
-
   useEffect(() => {
-    eventAuthFetch().then(json => json.filter(e => e.user_id === user.id)).then(setActivityEvents)
+    if (user) {
+      eventAuthFetch()
+      .then(json => json.filter(e => e.user_id === user.id))
+      .then(setActivityEvents)
+      .catch(err => console.log(err))
+    } 
+    else {
+      console.log('No User')
+    }
   }, [user])
 
 
@@ -41,7 +48,7 @@ function Home({ ENDPOINT }) {
 
   return (
     
-    <Grid container alignContent='center'>
+    <Grid container alignContent='center' height={'95vh'}>
       <Grid item xs={10} sx={{ m: 'auto'}}>
         <StyleWrapper>
           <FullCalendar 

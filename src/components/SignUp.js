@@ -64,7 +64,7 @@ function SignUp({ setUser, ENDPOINT }) {
             direction='column'
             alignItems={'center'}
             justifyContent={'center'}
-            style={{ minHeight: '80vh'}}
+            style={{ minHeight: '95vh'}}
         
         >
                 <Grid item xs={12} align="center">

@@ -28,13 +28,14 @@ function Login({setUser, ENDPOINT}) {
             body: JSON.stringify(userObj),
         })
         .then((r) => r.json())
-        .then((r) => {
-            localStorage.setItem('token', r.jwt)
-            setUser(r.user)
-            setUsername('')
-            setPassword('')
+        .then(r => r.user ? ((
+            localStorage.setItem('token', r.jwt),
+            setUser(r.user),
+            setUsername(''),
+            setPassword(''),
             navigate('/home')
-        })
+        )) : alert('Invalid username/password'))
+        .catch(err => console.log(err))
     }
 
 

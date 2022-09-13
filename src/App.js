@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { currentUser } from "./recoil/atoms";
 import { Box, styled, ThemeProvider } from "@mui/material";
@@ -74,7 +74,7 @@ function App() {
 
   return (
 
-    <Router basename={"/cardio-calendar-frontend"}>
+    <Router>
       <ThemeProvider theme={theme}>
         <GradientBox>
           <NavBar handleLogout={handleLogout}/>

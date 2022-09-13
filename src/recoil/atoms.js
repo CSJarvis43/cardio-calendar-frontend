@@ -98,3 +98,8 @@ export const calorieCalculatorValueState = atom({
         exercise_type: ''
     },
 })
+
+export const calorieCalcStatementState = atom({
+    key: 'calorieCalcStatementState',
+    default: "",
+})

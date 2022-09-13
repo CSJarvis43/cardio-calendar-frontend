@@ -1,13 +1,14 @@
 import { FormControl, Grid, Typography, InputLabel, Select, MenuItem, TextField, Button, Card, CardContent, CardActions } from '@mui/material'
 import React from 'react'
 import { useRecoilState } from 'recoil'
-import { calorieCalculatorValueState, newEventDataState } from '../recoil/atoms'
+import { calorieCalcStatementState, calorieCalculatorValueState, newEventDataState } from '../recoil/atoms'
 import { Link } from 'react-router-dom'
 
 function CalorieCalculator({ capitalizeFirstLetter }) {
 
     const [newEventData, setNewEventData] = useRecoilState(newEventDataState)
     const [calorieCalculatorValue, setCalorieCalculatorValue] = useRecoilState(calorieCalculatorValueState)
+    const [calorieCalcStatement, setCalorieCalcStatement] = useRecoilState(calorieCalcStatementState)
 
     const POUNDSTOKILOGRAMS = 2.20462
     const CALORIECOEFFICIENT = .0175
@@ -39,6 +40,7 @@ function CalorieCalculator({ capitalizeFirstLetter }) {
                         calories: result.toFixed(),
                         activity_length: time
                     })
+                setCalorieCalcStatement(`biking`)
                 break
 
             case 'run':
@@ -49,6 +51,7 @@ function CalorieCalculator({ capitalizeFirstLetter }) {
                         calories: result.toFixed(),
                         activity_length: time
                     })
+                setCalorieCalcStatement(`running`)
                 break
 
             case 'ski':
@@ -59,6 +62,7 @@ function CalorieCalculator({ capitalizeFirstLetter }) {
                         calories: result.toFixed(),
                         activity_length: time
                     })
+                setCalorieCalcStatement(`skiing`)
                 break
 
             case 'swim':
@@ -69,6 +73,7 @@ function CalorieCalculator({ capitalizeFirstLetter }) {
                         calories: result.toFixed(),
                         activity_length: time
                     })
+                setCalorieCalcStatement(`swimming`)
                 break
 
             case 'hike':
@@ -79,6 +84,7 @@ function CalorieCalculator({ capitalizeFirstLetter }) {
                         calories: result.toFixed(),
                         activity_length: time
                     })
+                setCalorieCalcStatement(`hiking`)
                 break
 
             default: console.error('No/not enough values receieved')
@@ -92,8 +98,8 @@ function CalorieCalculator({ capitalizeFirstLetter }) {
         })
         
     }
-    
-    console.log(newEventData)
+
+
 
   return (
     <Grid >
@@ -146,7 +152,9 @@ function CalorieCalculator({ capitalizeFirstLetter }) {
                 />
                 <Button
                     sx={{ m: 2 }}
-                    onClick={handleCalculation}
+                    onClick={() => {
+                        handleCalculation()
+                    }}
                     variant="contained"
                 >
                     Calculate
@@ -161,7 +169,7 @@ function CalorieCalculator({ capitalizeFirstLetter }) {
                 >
                     <CardContent>
                         <Typography variant='h5'>
-                            {`You burn ${newEventData.calories} calories on a ${newEventData.activity_length} minute ${capitalizeFirstLetter(newEventData.exercise_type)}`}
+                            {`${capitalizeFirstLetter(calorieCalcStatement)} for ${newEventData.activity_length} minutes will burn ${newEventData.calories} calories`}
                         </Typography>
                     </CardContent>
                     <CardActions>

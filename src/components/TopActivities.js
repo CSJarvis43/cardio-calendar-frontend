@@ -2,17 +2,15 @@ import { FormControl, Grid, MenuItem, Paper, Select, Typography, InputLabel, But
 import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import useAuthorizedFetch from '../lib/useAuthorizedFetch'
-import { currentUser, matchingActiveDayState, personalRecordSelectState, topActivityDataState } from '../recoil/atoms'
+import { currentUser, personalRecordSelectState, topActivityDataState } from '../recoil/atoms'
 
 function TopActivities({ GradientBox, ENDPOINT, capitalizeFirstLetter, handleDeleteActivity }) {
 
     const [personalRecordSelect, setPersonalRecordSelect] = useRecoilState(personalRecordSelectState)
     const [topActivityData, setTopActivityData] = useRecoilState(topActivityDataState)
     const user = useRecoilValue(currentUser)
-    const [matchingActiveDay, setMatchingActiveDay] = useRecoilState(matchingActiveDayState)
 
     const authFetchTopActivity = useAuthorizedFetch()
-    const authFetchMatchingActiveDay = useAuthorizedFetch()
 
 
     function handleTopSelectChange(e) {
@@ -34,18 +32,16 @@ function TopActivities({ GradientBox, ENDPOINT, capitalizeFirstLetter, handleDel
     }
 
     function handleMatchToUser(json) {
-        setTopActivityData(json)
-        authFetchMatchingActiveDay(`${ENDPOINT}/active_days/${json.active_day_id}`)
-        .then(setMatchingActiveDay)
-        .then(matchingActiveDay.active_day.user_id === user.id ? console.log('match') : setTopActivityData({
-            ...json,
-            no_data: true,
-        }))
+        const userFilteredActivities = json.filter(a => a.active_day.user_id === user.id)
+        if(userFilteredActivities.length > 0 ) {
+            setTopActivityData(userFilteredActivities[0])
+        } else {
+            setTopActivityData({
+                ...json,
+                no_data: true,
+            })
+        }
     }
-
-    console.log(topActivityData)
-    console.log(user)
-    console.log(matchingActiveDay.active_day.id)
 
 
   return (

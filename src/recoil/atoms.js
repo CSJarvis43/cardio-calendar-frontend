@@ -119,11 +119,3 @@ export const topActivityDataState = atom({
         exercise_type: '',
     },
 })
-
-export const matchingActiveDayState = atom({
-    key: 'matchingActiveDayState',
-    default: {
-        id: null,
-        exercise_type: '',
-    },
-})

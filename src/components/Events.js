@@ -6,22 +6,22 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import useAuthorizedFetch from '../lib/useAuthorizedFetch'
 import { activitiesByDayState, deletingActivityState, selectedCalendarEventState, selectedDateState } from '../recoil/atoms'
 
-function Event({ENDPOINT, capitalizeFirstLetter, GradientBox}) {
+function Event({ENDPOINT, capitalizeFirstLetter, GradientBox, handleDeleteActivity}) {
 
     const selectedCalendarEvent = useRecoilValue(selectedCalendarEventState)
     const [activitiesByDay, setActivitiesByDay] = useRecoilState(activitiesByDayState)
     const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState)
-    const [deletingActivity, setDeletingActivity] = useRecoilState(deletingActivityState)
+    const deletingActivity = useRecoilValue(deletingActivityState)
 
-    const authFetchActiveDayActivities = useAuthorizedFetch(`${ENDPOINT}/active_days/${selectedCalendarEvent}/activities`)
-    const authFetchActiveDay = useAuthorizedFetch(`${ENDPOINT}/active_days/${selectedCalendarEvent}`)
+    const authFetchActiveDayActivities = useAuthorizedFetch()
+    const authFetchActiveDay = useAuthorizedFetch()
 
     // console.log(selectedCalendarEvent)
 
 
     useEffect(() => {
-        authFetchActiveDayActivities().then(setActivitiesByDay)
-        authFetchActiveDay().then(setSelectedDate)
+        authFetchActiveDayActivities(`${ENDPOINT}/active_days/${selectedCalendarEvent}/activities`).then(setActivitiesByDay)
+        authFetchActiveDay(`${ENDPOINT}/active_days/${selectedCalendarEvent}`).then(setSelectedDate)
     }, [deletingActivity])
 
     // console.log(activitiesByDay)
@@ -37,17 +37,6 @@ function Event({ENDPOINT, capitalizeFirstLetter, GradientBox}) {
     const activityLengthSum = activitiesByDay.reduce((acc, obj) => {
         return acc + obj.activity_length
     }, 0)
-
-    function handleDeleteActivity(activity) {
-        fetch(`${ENDPOINT}/activities/${activity.id}`, {
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-                "Content-Type": "application/json",
-                Accept: "application/json"
-            }
-        }).then(setDeletingActivity(activity))
-    }
 
 
 

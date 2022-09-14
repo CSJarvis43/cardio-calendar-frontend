@@ -111,3 +111,19 @@ export const personalRecordSelectState = atom({
         sort_by: ''
     },
 })
+
+export const topActivityDataState = atom({
+    key: 'topActivityDataState',
+    default: {
+        id: null,
+        exercise_type: '',
+    },
+})
+
+export const matchingActiveDayState = atom({
+    key: 'matchingActiveDayState',
+    default: {
+        id: null,
+        exercise_type: '',
+    },
+})

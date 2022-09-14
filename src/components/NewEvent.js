@@ -14,15 +14,15 @@ function NewEvent({ ENDPOINT }) {
   const [multipleActivitiesSameDay, setMultipleActivitiesSameDay] = useRecoilState(multipleActivitiesSameDayState)
   const user = useRecoilValue(currentUser)
 
-  const authFetchActiveDays = useAuthorizedFetch(`${ENDPOINT}/active_days/`)
-  const authFetchSubmitNewEvent = useAuthorizedFetch(`${ENDPOINT}/active_days/`, 'POST')
-  const authFetchSubmitNewActivity = useAuthorizedFetch(`${ENDPOINT}/activities/`, 'POST')
+  const authFetchActiveDays = useAuthorizedFetch()
+  const authFetchSubmitNewEvent = useAuthorizedFetch()
+  const authFetchSubmitNewActivity = useAuthorizedFetch()
 
 
   
   useEffect(() => {
-    authFetchActiveDays().then(json => json.filter(e => e.user_id === user.id)).then(j => j.length > 0 ? setActiveDaysForNewEvent(j[j.length -1]) : setActiveDaysForNewEvent({ date: new Date('2020, 1, 1')}))
-    authFetchActiveDays().then(json => json.filter(e => e.user_id === user.id)).then(d => setMultipleActivitiesSameDay(d))
+    authFetchActiveDays(`${ENDPOINT}/active_days/`).then(json => json.filter(e => e.user_id === user.id)).then(j => j.length > 0 ? setActiveDaysForNewEvent(j[j.length -1]) : setActiveDaysForNewEvent({ date: new Date('2020, 1, 1')}))
+    authFetchActiveDays(`${ENDPOINT}/active_days/`).then(json => json.filter(e => e.user_id === user.id)).then(d => setMultipleActivitiesSameDay(d))
   }, [])
 
   // console.log(multipleActivitiesSameDay)
@@ -66,7 +66,7 @@ function NewEvent({ ENDPOINT }) {
     }
 
     // console.log(newActiveDayObj)
-    authFetchSubmitNewEvent(newActiveDayObj)
+    authFetchSubmitNewEvent(`${ENDPOINT}/active_days/`, 'POST', newActiveDayObj)
     .then(r => r.status === 422 ? handleMultipleActivitySameDay(newActiveDayObj) : r.json().then(json => handleActivityPost(json)))
   }
 
@@ -77,7 +77,7 @@ function NewEvent({ ENDPOINT }) {
       active_day_id: active_day.active_day.id
     }
 
-    authFetchSubmitNewActivity(transfomedNewEventData)
+    authFetchSubmitNewActivity(`${ENDPOINT}/activities/`, 'POST', transfomedNewEventData)
     setNewEventData({
       ...newEventData,
       exercise_type: "",

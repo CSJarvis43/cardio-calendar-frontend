@@ -1,11 +1,18 @@
-import { FormControl, Grid, MenuItem, Paper, Select, Typography, InputLabel, Button } from '@mui/material'
+import { FormControl, Grid, MenuItem, Paper, Select, Typography, InputLabel, Button, Card, CardContent, Rating, Box, CardActions } from '@mui/material'
 import React from 'react'
-import { useRecoilState } from 'recoil'
-import { personalRecordSelectState } from '../recoil/atoms'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import useAuthorizedFetch from '../lib/useAuthorizedFetch'
+import { currentUser, matchingActiveDayState, personalRecordSelectState, topActivityDataState } from '../recoil/atoms'
 
-function TopActivities({ GradientBox }) {
+function TopActivities({ GradientBox, ENDPOINT, capitalizeFirstLetter, handleDeleteActivity }) {
 
     const [personalRecordSelect, setPersonalRecordSelect] = useRecoilState(personalRecordSelectState)
+    const [topActivityData, setTopActivityData] = useRecoilState(topActivityDataState)
+    const user = useRecoilValue(currentUser)
+    const [matchingActiveDay, setMatchingActiveDay] = useRecoilState(matchingActiveDayState)
+
+    const authFetchTopActivity = useAuthorizedFetch()
+    const authFetchMatchingActiveDay = useAuthorizedFetch()
 
 
     function handleTopSelectChange(e) {
@@ -19,8 +26,26 @@ function TopActivities({ GradientBox }) {
     }
 
     function handleFetchRecords() {
-        console.log('good place to stop for the night')
+        authFetchTopActivity(`${ENDPOINT}/activities/${personalRecordSelect.exercise_type}/top/${personalRecordSelect.sort_by}`)
+        .then(j => j !== null ? handleMatchToUser(j) : setTopActivityData({
+            ...j,
+            no_data: true,
+        }))
     }
+
+    function handleMatchToUser(json) {
+        setTopActivityData(json)
+        authFetchMatchingActiveDay(`${ENDPOINT}/active_days/${json.active_day_id}`)
+        .then(setMatchingActiveDay)
+        .then(matchingActiveDay.active_day.user_id === user.id ? console.log('match') : setTopActivityData({
+            ...json,
+            no_data: true,
+        }))
+    }
+
+    console.log(topActivityData)
+    console.log(user)
+    console.log(matchingActiveDay.active_day.id)
 
 
   return (
@@ -60,6 +85,9 @@ function TopActivities({ GradientBox }) {
                         name='sort_by'
                         onChange={handleTopSelectChange}
                     >
+                        <MenuItem value={'distance'}>Distance</MenuItem>
+                        <MenuItem value={'activity_length'}>Time Spent Active</MenuItem>
+                        <MenuItem value={'calories'}>Calories</MenuItem>
                     </Select>
                 </FormControl>
             </Grid>
@@ -71,6 +99,66 @@ function TopActivities({ GradientBox }) {
                     Search
                 </Button>
             </Grid>
+            {topActivityData.id === null ? null : (
+                (topActivityData.no_data === true ? (
+                    <Grid item>
+                        <Paper elevation={20} sx={{ p: 2, width: '60vw', border: 3, borderColor: 'primary.main', mt: 5}}>
+                            <Typography align='center' variant='h2'>
+                                No Personal Bests for this Activity Type
+                            </Typography>
+                        </Paper>
+                    </Grid>
+                ) : (                <Grid item xs={12} align="center">
+                <Card 
+                    raised={true} 
+                    sx={{ m: 1, border: .5, borderColor: 'primary.main', width: 600}}
+                >
+                    <CardContent>
+                    <Typography align='center' variant='h6'>
+                        Exercise Type:
+                    </Typography>
+                    <Typography align='center' variant='h4'>
+                        {capitalizeFirstLetter(topActivityData.exercise_type)}
+                    </Typography>
+                    <Typography align='center' variant='h6'>
+                        Calories Burned:
+                    </Typography>
+                    <Typography align='center' variant='h4'>
+                        {topActivityData.calories}
+                    </Typography>
+                    <Typography align='center' variant='h6'>
+                        Duration:
+                    </Typography>
+                    <Typography align='center' variant='h4'>
+                        {topActivityData.activity_length} minutes
+                    </Typography>
+                    <Typography align='center' variant='h6'>
+                        Distance:
+                    </Typography>
+                    <Typography align='center' variant='h4'>
+                        {topActivityData.distance} miles
+                    </Typography>
+                    <Grid container alignContent={'center'}>
+                        <Rating 
+                            value={topActivityData.rating}
+                            readOnly
+                            max={10}
+                            sx={{ m: 'auto'}}
+                        />
+                    </Grid>
+                    </CardContent>
+                    <Box display={'flex'}>
+                        <CardActions sx={{ m: 'auto'}}>
+                            <Button variant='contained' sx={{ m: 'auto' }} onClick={() => {
+                                    handleDeleteActivity(topActivityData)
+                                }}>
+                                delete
+                            </Button>
+                        </CardActions>
+                    </Box>
+                </Card>
+            </Grid>))
+            )}
         </Grid>
     </GradientBox>
 

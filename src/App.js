@@ -1,6 +1,6 @@
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { currentUser } from "./recoil/atoms";
+import { currentUser, deletingActivityState } from "./recoil/atoms";
 import { Box, styled, ThemeProvider } from "@mui/material";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
@@ -17,6 +17,7 @@ import TopActivities from "./components/TopActivities";
 function App() {
 
   const setUser = useSetRecoilState(currentUser)
+  const setDeletingActivity = useSetRecoilState(deletingActivityState)
 
   const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://cardio-calendar.herokuapp.com' : 'http://localhost:3000'
 
@@ -71,6 +72,19 @@ function App() {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
 
+  function handleDeleteActivity(activity) {
+    fetch(`${ENDPOINT}/activities/${activity.id}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        }
+    }).then(() => {
+      setDeletingActivity(activity)
+      console.log(activity)
+    })
+}
 
 
   return (
@@ -111,6 +125,7 @@ function App() {
                   ENDPOINT={ENDPOINT}
                   capitalizeFirstLetter={capitalizeFirstLetter}
                   GradientBox={GradientBox}
+                  handleDeleteActivity={handleDeleteActivity}
                   />
               }
             />
@@ -136,6 +151,8 @@ function App() {
                   <TopActivities
                   ENDPOINT={ENDPOINT}
                   GradientBox={GradientBox}
+                  capitalizeFirstLetter={capitalizeFirstLetter}
+                  handleDeleteActivity={handleDeleteActivity}
                   />
               }
             />

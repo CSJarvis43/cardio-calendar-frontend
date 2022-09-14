@@ -18,11 +18,11 @@ function Home({ ENDPOINT }) {
   const user = useRecoilValue(currentUser)
   
   const navigate = useNavigate()
-  const eventAuthFetch = useAuthorizedFetch(`${ENDPOINT}/active_days`)
+  const eventAuthFetch = useAuthorizedFetch()
 
   useEffect(() => {
     if (user) {
-      eventAuthFetch()
+      eventAuthFetch(`${ENDPOINT}/active_days`)
       .then(json => json.filter(e => e.user_id === user.id))
       .then(setActivityEvents)
       .catch(err => console.log(err))

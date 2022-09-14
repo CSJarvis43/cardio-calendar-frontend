@@ -7,7 +7,7 @@ This idea was born out of a personal need for something like this, as right now 
 The main idea behind this app is for a user to be able to come with some statistics about their workout, and have the app provide them with some statistics, and keep track of their progress over the last week/month/year.
 One note about this project is that it is more of an "after the fact" type of project, and thus will not be dealing with GPS data or other active monitoring tech.
 
-User Stories:
+User Stories -- before development:
 
     *A user comes to the site having just completed a run/bike/swim/etc and has tracked both the distance and time of their exercise. They can submit a new workout to the app, which will store the data and display it for the user.
         The app will also provide the user some more detailed statistics about their session. At this point in time I am thinking calories, distance/time, personal records.
@@ -21,7 +21,7 @@ User Stories:
     *A user wants to see their streak for completing activities, the app will be able to serve them data about different types of streaks, whether its daily streaks, weekly streaks, or same type activity streaks. 
         This is planned to be a prominent feature on the homepage.
 
-Feature Stories:
+Feature Stories -- after implementation:
 
     *Login/signup:
         User comes to the site and either logs in to their existing account, or creates a new account
@@ -40,15 +40,22 @@ Feature Stories:
         User can choose between a weekly calendar and a monthly calendar
         User can click on a session to go to a detail page show that session's activities/statistics
 
-    *Category Filtering
-        User will have a menu to filter their activities by what category they fall under
-        User will have different viewing options in a menu for how they want to organize the data
-        User can click on a session to again go to its detail page and see advanced stats
+    *Day View:
+        User can click on a day from the calendar to be taken into detail mode
+        Once in detail mode the user can see all of their activities from that day, along with their stats
+        From here, the user can update/delete activites as they see fit
 
-    *Streaks
-        User can choose the type of streaks that they want to see displayed (potentially choosing a default sort on signup)
-        Streaks will display on their homepage
-        Potentially have a streaks page with more advanced stats about their currently selected type of streak
+    *Calorie Calculator:
+        User wants to see how many calories they burned
+        They can enter a few details into the calculator to get the desired info
+        Once they have the info, they can move straight to posting a new activity
+
+    *Top Activity View:
+        User wants to see their personal bests
+        They can go to the top section, and choose what exercises they want and how to sort them
+        App then shows the user their records in whatever category they chose
+
+
 
 The above user stories I think is a good place to start in terms of goals for this project. Because this is supposed to be a clean and polished app, I feel as though it is better to lock down a core set of features, and improve on them after reaching MVP.
 I think I can reach MVP status for this project within about a week and a half, and afterwards, can start working on some stretch goals:

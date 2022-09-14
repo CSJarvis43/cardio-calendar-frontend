@@ -1,6 +1,6 @@
-export default function useAuthorizedFetch(endpoint, method='GET') {
+export default function useAuthorizedFetch() {
 
-    return function(body=null) {
+    return function(endpoint, method='GET', body=null) {
         return fetch(endpoint, {
             method: method,
             headers: {

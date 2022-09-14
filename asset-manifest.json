@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/cardio-calendar-frontend/static/css/main.d8d69afb.css",
-    "main.js": "/cardio-calendar-frontend/static/js/main.fb25d033.js",
+    "main.js": "/cardio-calendar-frontend/static/js/main.7707fb33.js",
     "static/js/787.3fdadaa3.chunk.js": "/cardio-calendar-frontend/static/js/787.3fdadaa3.chunk.js",
     "index.html": "/cardio-calendar-frontend/index.html",
     "main.d8d69afb.css.map": "/cardio-calendar-frontend/static/css/main.d8d69afb.css.map",
-    "main.fb25d033.js.map": "/cardio-calendar-frontend/static/js/main.fb25d033.js.map",
+    "main.7707fb33.js.map": "/cardio-calendar-frontend/static/js/main.7707fb33.js.map",
     "787.3fdadaa3.chunk.js.map": "/cardio-calendar-frontend/static/js/787.3fdadaa3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d8d69afb.css",
-    "static/js/main.fb25d033.js"
+    "static/js/main.7707fb33.js"
   ]
 }

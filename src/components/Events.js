@@ -97,9 +97,6 @@ function Event({ENDPOINT, capitalizeFirstLetter, GradientBox, handleDeleteActivi
                             </CardContent>
                             <Box display={'flex'}>
                                 <CardActions sx={{ m: 'auto'}}>
-                                    <Button variant='contained' sx={{ m: 'auto' }}>
-                                        edit
-                                    </Button>
                                     <Button variant='contained' sx={{ m: 'auto' }} onClick={() => {
                                             handleDeleteActivity(activity)
                                         }}>

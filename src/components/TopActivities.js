@@ -142,6 +142,12 @@ function TopActivities({ GradientBox, ENDPOINT, capitalizeFirstLetter, handleDel
                             sx={{ m: 'auto'}}
                         />
                     </Grid>
+                    <Typography align='center' variant='h6'>
+                        This Personal Best Was Set On:
+                    </Typography>
+                    <Typography align='center' variant='h4'>
+                        {capitalizeFirstLetter(topActivityData.active_day.day_of_week)}, {topActivityData.active_day.date}
+                    </Typography>
                     </CardContent>
                     <Box display={'flex'}>
                         <CardActions sx={{ m: 'auto'}}>

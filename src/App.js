@@ -1,6 +1,6 @@
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { currentUser, deletingActivityState } from "./recoil/atoms";
+import { HashRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { useSetRecoilState, useRecoilState } from "recoil";
+import { activityForDeletingParentState, currentUser, deletingActivityState } from "./recoil/atoms";
 import { Box, styled, ThemeProvider } from "@mui/material";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
@@ -13,11 +13,16 @@ import CalorieCalculator from "./components/CalorieCalculator";
 import { theme } from "./components/Theme";
 import { keyframes } from "@mui/system"
 import TopActivities from "./components/TopActivities";
+import useAuthorizedFetch from "./lib/useAuthorizedFetch";
 
 function App() {
 
   const setUser = useSetRecoilState(currentUser)
-  const setDeletingActivity = useSetRecoilState(deletingActivityState)
+  const [deletingActivity, setDeletingActivity] = useRecoilState(deletingActivityState)
+  const [activityForDeletingParent, setActivityForDeletingParent] = useRecoilState(activityForDeletingParentState)
+
+  const authFetch = useAuthorizedFetch()
+  // const navigate = useNavigate()
 
   const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://cardio-calendar.herokuapp.com' : 'http://localhost:3000'
 
@@ -73,18 +78,26 @@ function App() {
   }
 
   function handleDeleteActivity(activity) {
-    fetch(`${ENDPOINT}/activities/${activity.id}`, {
-        method: 'DELETE',
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-            "Content-Type": "application/json",
-            Accept: "application/json"
-        }
-    }).then(() => {
+    authFetch(`${ENDPOINT}/activities/${activity.id}`, 'DELETE')
+    .then(() => {
+      checkForDeleteParent(activity)
       setDeletingActivity(activity)
-      console.log(activity)
     })
-}
+  }
+
+  function checkForDeleteParent(activity) {
+
+    authFetch(`${ENDPOINT}/activities`)
+    .then(json => json.filter(json => json.active_day_id === activity.active_day_id))
+    .then(json => setActivityForDeletingParent(json))
+  }
+  
+
+  function deleteParentActiveDay() {
+    if(activityForDeletingParent.length === 0) {
+      authFetch(`${ENDPOINT}/active_days/${deletingActivity.active_day_id}`, 'DELETE')
+    }
+  }
 
 
   return (
@@ -126,6 +139,7 @@ function App() {
                   capitalizeFirstLetter={capitalizeFirstLetter}
                   GradientBox={GradientBox}
                   handleDeleteActivity={handleDeleteActivity}
+                  deleteParentActiveDay={deleteParentActiveDay}
                   />
               }
             />

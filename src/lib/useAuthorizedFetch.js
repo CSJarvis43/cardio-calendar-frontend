@@ -9,6 +9,6 @@ export default function useAuthorizedFetch() {
                 Accept: "application/json"
             },
             body: method === 'GET' ? body : JSON.stringify(body)
-        }).then(method !== 'POST' ? r => r.json() : null)
+        }).then(method === 'GET' ? r => r.json() : null)
     }
 }

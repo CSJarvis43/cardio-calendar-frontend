@@ -6,7 +6,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import useAuthorizedFetch from '../lib/useAuthorizedFetch'
 import { activitiesByDayState, deletingActivityState, selectedCalendarEventState, selectedDateState } from '../recoil/atoms'
 
-function Event({ENDPOINT, capitalizeFirstLetter, GradientBox, handleDeleteActivity}) {
+function Event({ENDPOINT, capitalizeFirstLetter, GradientBox, handleDeleteActivity, deleteParentActiveDay}) {
 
     const selectedCalendarEvent = useRecoilValue(selectedCalendarEventState)
     const [activitiesByDay, setActivitiesByDay] = useRecoilState(activitiesByDayState)
@@ -16,15 +16,12 @@ function Event({ENDPOINT, capitalizeFirstLetter, GradientBox, handleDeleteActivi
     const authFetchActiveDayActivities = useAuthorizedFetch()
     const authFetchActiveDay = useAuthorizedFetch()
 
-    // console.log(selectedCalendarEvent)
-
 
     useEffect(() => {
         authFetchActiveDayActivities(`${ENDPOINT}/active_days/${selectedCalendarEvent}/activities`).then(setActivitiesByDay)
         authFetchActiveDay(`${ENDPOINT}/active_days/${selectedCalendarEvent}`).then(setSelectedDate)
     }, [deletingActivity])
 
-    // console.log(activitiesByDay)
 
     const calorieSum = activitiesByDay.reduce((acc, obj) => {
         return acc + obj.calories
@@ -100,9 +97,6 @@ function Event({ENDPOINT, capitalizeFirstLetter, GradientBox, handleDeleteActivi
                             </CardContent>
                             <Box display={'flex'}>
                                 <CardActions sx={{ m: 'auto'}}>
-                                    <Button variant='contained' sx={{ m: 'auto' }}>
-                                        edit
-                                    </Button>
                                     <Button variant='contained' sx={{ m: 'auto' }} onClick={() => {
                                             handleDeleteActivity(activity)
                                         }}>
@@ -150,6 +144,7 @@ function Event({ENDPOINT, capitalizeFirstLetter, GradientBox, handleDeleteActivi
                                 variant='contained'
                                 component={Link}
                                 to='/home'
+                                onClick={deleteParentActiveDay}
                             >
                                 Back To Calendar
                             </Button>

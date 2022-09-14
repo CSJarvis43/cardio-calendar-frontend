@@ -108,7 +108,7 @@ function NewEvent({ ENDPOINT }) {
       active_day_id: matchingDuplicateDates[0].id
     }
 
-    authFetchSubmitNewActivity(transformedDuplicateEventDayData)
+    authFetchSubmitNewActivity(`${ENDPOINT}/activities/`, 'POST', transformedDuplicateEventDayData)
     setNewEventData({
       ...newEventData,
       exercise_type: "",

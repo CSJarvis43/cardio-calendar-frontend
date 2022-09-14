@@ -119,3 +119,8 @@ export const topActivityDataState = atom({
         exercise_type: '',
     },
 })
+
+export const activityForDeletingParentState = atom({
+    key: "activityForDeletingParentState",
+    default: []
+})
